@@ -2,32 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.image-container {
+  width: 454px;
+  height: 406px;
+  -webkit-mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='454' height='406' viewBox='0 0 454 406' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M222.868 0.0910671C301.529 -1.6059 384.044 20.3087 429 74.6285C471.516 126.001 450.888 192.492 432.254 253.092C414.558 310.644 394.344 375.529 329.318 398.819C266.207 421.423 199.79 385.933 139.902 357.802C86.2387 332.594 37.1371 301.305 17.4576 252.329C-5.15544 196.051 -10.3297 132.255 29.582 83.2451C72.6075 30.411 146.756 1.73304 222.868 0.0910671Z' fill='black'/%3E%3C/svg%3E"); 
+  mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='454' height='406' viewBox='0 0 454 406' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M222.868 0.0910671C301.529 -1.6059 384.044 20.3087 429 74.6285C471.516 126.001 450.888 192.492 432.254 253.092C414.558 310.644 394.344 375.529 329.318 398.819C266.207 421.423 199.79 385.933 139.902 357.802C86.2387 332.594 37.1371 301.305 17.4576 252.329C-5.15544 196.051 -10.3297 132.255 29.582 83.2451C72.6075 30.411 146.756 1.73304 222.868 0.0910671Z' fill='black'/%3E%3C/svg%3E");      
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}

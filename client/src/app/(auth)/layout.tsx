@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Footer from "@/components/ui/Footer";
+import "@/app/globals.css";
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
-
+import Footer from "@/components/ui/Footer";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,9 +29,9 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="font-body bg-orange-100 bg-opacity-55 text-blue-950">
+      <body className="font-body bg-white bg-opacity-55 text-blue-950">
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );

@@ -57,7 +57,7 @@ export default function Header() {
                   >خدمات</Link>
 
                   <Button asChild className="w-full">
-                    <Link href="/signup">تسجيل</Link>
+                    <Link href="/signin">تسجيل</Link>
                   </Button>
                 </ul>
               </div>
@@ -125,7 +125,11 @@ export default function Header() {
       }
     `}</style>
         </div>
-        <Button className="hidden md:block ">تسجيل</Button>
+        <Button asChild className="hidden md:block ">
+          <Link href="/signin">
+            تسجيل
+          </Link>
+        </Button>
       </div>
 
     </header>

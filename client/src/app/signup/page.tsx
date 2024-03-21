@@ -90,7 +90,7 @@ export default function Home() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className="flex flex-col gap-4"
+                className="flex flex-col gap-1"
               >
                 {/* first and last name */}
                 <div className='flex flex-col md:flex-row items-center gap-4 justify-between '>
@@ -238,7 +238,7 @@ export default function Home() {
                   control={form.control}
                   name="dob"
                   render={({ field }) => (
-                    <FormItem className="flex flex-col ">
+                    <FormItem className="flex flex-col mt-4">
                       <FormLabel>تاريخ الميلاد</FormLabel>
                       <Popover >
                         <PopoverTrigger asChild>
@@ -296,20 +296,19 @@ export default function Home() {
                   }}
                 />
 
-                <Button type="submit" className="w-full mt-4 bg-blue-950 text-orange-50">
-                  Submit
-                  <Icon icon="flag:ly-4x3" />
+                <Button type="submit" className="w-full mt-3 bg-blue-950 text-orange-50">
+                إنشاء حساب جديد
                 </Button>
 
-                <Link className="text-xl"
-                  href="/">
+                <Link className="text-lg mt-2"
+                  href="/login">
                   تسجيل الدخول
                 </Link>
               </form>
             </Form>
 
           </div>
-          H</div>
+        </div>
       </div>
     </>
   );

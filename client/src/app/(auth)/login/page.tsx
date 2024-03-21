@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
-import Header from "@/components/ui/Header";
+import Header from "@/components/Header";
 const formSchema = z
   .object({
     emailAddress: z.string().email(),

@@ -7,7 +7,7 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
 
   const path = request.nextUrl.pathname
-  const isPublicPath = path == '/signin' || path == '/signup' || path == '/' || path == '/login'
+  const isPublicPath = path == '/signin' || path == '/signup' || path == '/' || path == '/login' || path == '/user';
   const token = request.cookies.get('token')?.value || '';
 
   if (!token && !isPublicPath) {
@@ -15,9 +15,9 @@ export function middleware(request: NextRequest) {
   }
 
   //  #TODO check if token is valid then dircet the user to the user page
-  if (token && isPublicPath ) {
+  if (token && isPublicPath) {
     return NextResponse.redirect(new URL("/user", request.nextUrl));
-  } 
+  }
 
 
   // if (path === 'verifyemail' && !token) {
@@ -42,6 +42,7 @@ export const config = {
     '/user/:path*',
     '/login',
     '/signup',
-    '/signin'
+    '/signin',
+
   ]
 }

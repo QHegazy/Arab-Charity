@@ -9,6 +9,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { PackagesModule } from './packages/packages.module';
 import { APP_FILTER } from '@nestjs/core';
 import { CastErrorExceptionFilter } from './filters/cast-error.filter.spec';
+import { EncryptionService } from './shared/encryption-password/encryption-password.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CastErrorExceptionFilter } from './filters/cast-error.filter.spec';
       provide: APP_FILTER,
       useClass: CastErrorExceptionFilter,
     },
+    EncryptionService,
   ],
 })
 export class AppModule {}

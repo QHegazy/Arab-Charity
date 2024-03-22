@@ -87,25 +87,124 @@ export class UsersController {
 
   @Put(':id')
   @Header('Cache-Control', 'none')
-  @HttpCode(201) // Set the HTTP status code to 201 (Created)
+  @HttpCode(201)
   async updateUserByID(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<ResponseObject<User>> {
-    const updatedUser = await this.usersService.updateUserByID(
-      id,
-      updateUserDto,
-    );
-    return new ResponseObject(
-      'updates',
-      201,
-      'User updated successfully',
-      updatedUser,
-    );
+    try {
+      const updatedUser = await this.usersService.updateUserByID(
+        id,
+        updateUserDto,
+      );
+      if (updatedUser) {
+        return new ResponseObject(
+          'success',
+          201,
+          'User updated successfully',
+          updatedUser,
+        );
+      }
+      return new ResponseObject('not-found', 404, 'User not found', undefined);
+    } catch (error) {
+      throw error;
+    }
+  }
+  @Put('email/:email')
+  @Header('Cache-Control', 'none')
+  @HttpCode(201)
+  async updateUserByEmail(
+    @Param('email', new ParseEmailPipe()) email: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<ResponseObject<User>> {
+    try {
+      const updatedUser = await this.usersService.updateUserByEmail(
+        email,
+        updateUserDto,
+      );
+      if (updatedUser) {
+        return new ResponseObject('success', 201, 'User updated successfully');
+      }
+      return new ResponseObject('not-found', 404, 'User not found', undefined);
+    } catch (error) {
+      throw error;
+    }
+  }
+  @Put('phone/:phoneNumber')
+  @Header('Cache-Control', 'none')
+  @HttpCode(201)
+  async updateUserByPhoneNumber(
+    @Param('phoneNumber', new ParseIntPipe()) phoneNumber: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<ResponseObject<User>> {
+    try {
+      const updatedUser = await this.usersService.updateUserByPhoneNumber(
+        phoneNumber,
+        updateUserDto,
+      );
+      if (updatedUser) {
+        return new ResponseObject('success', 201, 'User updated successfully');
+      }
+      return new ResponseObject('not-found', 404, 'User not found', undefined);
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Delete(':id')
-  async deleteUserByID(@Param('id') id: string): Promise<User> {
-    return this.usersService.deleteUserByID(id);
+  async deleteUserByID(@Param('id') id: string): Promise<ResponseObject<User>> {
+    try {
+      const deletedUser = await this.usersService.deleteUserByID(id);
+      if (deletedUser) {
+        return new ResponseObject('success', 200, 'User Deleted successfully');
+      }
+      return new ResponseObject(
+        'not-found',
+        404,
+        'User not found or deleted',
+        undefined,
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+  @Delete('email/:email')
+  async deleteUserByEmail(
+    @Param('id', new ParseEmailPipe()) email: string,
+  ): Promise<ResponseObject<User>> {
+    try {
+      const deletedUser = await this.usersService.deleteUserByEmail(email);
+      if (deletedUser) {
+        return new ResponseObject('success', 200, 'User Deleted successfully');
+      }
+      return new ResponseObject(
+        'not-found',
+        404,
+        'User not found or deleted',
+        undefined,
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+  @Delete('phone/:phoneNumber')
+  async deleteUserByphoneNumber(
+    @Param('phoneNumber', new ParseIntPipe()) phoneNumber: number,
+  ): Promise<ResponseObject<User>> {
+    try {
+      const deletedUser =
+        await this.usersService.deleteUserByPhoneNumber(phoneNumber);
+      if (deletedUser) {
+        return new ResponseObject('success', 200, 'User Deleted successfully');
+      }
+      return new ResponseObject(
+        'not-found',
+        404,
+        'User not found or deleted',
+        undefined,
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 }

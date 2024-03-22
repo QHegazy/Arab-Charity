@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-
+import { Country } from 'types/country/country';
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
@@ -11,11 +11,11 @@ export class User {
   @Prop({ required: true, type: String, minlength: 3, maxlength: 50 })
   LastName: string;
 
-  @Prop({ type: Number, required: true, minlength: 3, maxlength: 50 })
-  PhoneNumber: string;
+  @Prop({ type: Number, required: true, minlength: 3, maxlength: 15, min: 0 })
+  PhoneNumber: number;
 
-  @Prop({ type: String, required: true })
-  Country: string;
+  @Prop({ type: Country, required: true })
+  Country: Country;
 
   @Prop({ type: String, required: true })
   Email: string;

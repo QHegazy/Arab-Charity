@@ -8,8 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PackagesModule } from './packages/packages.module';
 import { APP_FILTER } from '@nestjs/core';
-import { CastErrorExceptionFilter } from './filters/cast-error.filter.spec';
-import { EncryptionService } from './shared/encryption-password/encryption-password.service';
+import { InventoryModule } from './inventory/inventory.module';
+import { CastErrorExceptionFilter } from './filters/cast-error.filter';
 
 @Module({
   imports: [
@@ -24,6 +24,7 @@ import { EncryptionService } from './shared/encryption-password/encryption-passw
     UsersModule,
     OrganizationsModule,
     PackagesModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [
@@ -32,7 +33,6 @@ import { EncryptionService } from './shared/encryption-password/encryption-passw
       provide: APP_FILTER,
       useClass: CastErrorExceptionFilter,
     },
-    EncryptionService,
   ],
 })
 export class AppModule {}

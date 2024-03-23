@@ -35,8 +35,6 @@ export class UsersService {
       .exec();
   }
   async findUserByID(id: string): Promise<User> {
-    const x = await this.userModel.findById(id);
-    console.log(await bcrypt.compare(id, x.Password));
     return this.userModel
       .findById(id)
       .select('-__v -CreatedAt -_id -Password')
@@ -106,5 +104,11 @@ export class UsersService {
   }
   async deleteUserByID(id: string): Promise<User> {
     return this.userModel.findByIdAndDelete(id);
+  }
+  async getUserByEmailPassword(email: string): Promise<User> {
+    return this.userModel.findOne({ Email: email });
+  }
+  async getUserByPhoneNumberPassword(PhoneNumber: number): Promise<User> {
+    return this.userModel.findOne({ PhoneNumber: PhoneNumber });
   }
 }

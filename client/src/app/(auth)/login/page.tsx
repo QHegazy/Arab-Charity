@@ -2,6 +2,9 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import Cookies from "js-cookie"
 import {
   Form,
   FormControl,
@@ -15,6 +18,7 @@ import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 import Header from "@/components/Header";
+import { Cookie } from "next/font/google";
 const formSchema = z
   .object({
     emailAddress: z.string().email(),
@@ -42,9 +46,25 @@ export default function Home() {
     },
   });
 
+  const router = useRouter();
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
+    try {
+      const response = await axios.post("/api/login", values)
+      if (response.status === 200) {
+        // successful login
+        Cookies.set('user_tooken', response.data.data)
+        router.push("/user")
+      } else {
+        console.log("login failed")
+      }
+
+    } catch(error) {
+      console.log(error)
+    }
+
   };
 
   return (

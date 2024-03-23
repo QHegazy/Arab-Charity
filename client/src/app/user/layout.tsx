@@ -30,7 +30,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="font-body bg-white bg-opacity-55 text-blue-950">
+      <body className="bg-orange-100 bg-opacity-55 text-blue-950">
         <SidebarDesktop />
         <main className="mr-[300px] mt-3">
           {children}

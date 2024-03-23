@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="h-screen py-11 flex items-center justify-center">
+      <div className=" min-h-screen py-11 flex items-center justify-center">
 
         <div className="container  mx-auto my-11">
           <div className=" md:w-[600px] m-auto bg-white p-10 rounded-3xl text-3xl font-semibold">

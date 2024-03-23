@@ -6,7 +6,6 @@ export function SidebarDesktop() {
           Arab charity
         </h3>
 
-
       </div>
     </aside>
   );

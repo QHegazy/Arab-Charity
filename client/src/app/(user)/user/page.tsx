@@ -73,29 +73,35 @@ const cardData: CardProps[] = [
 
 const uesrSalesData: SalesProps[] = [
   {
-    name: "Olivia Martin",
-    email: "olivia.martin@email.com",
-    saleAmount: "+$1,999.00"
+    name: "موسى محمد",
+    email: "mose@emailxample.com",
+    date: "2025/02/25"
   },
   {
-    name: "Jackson Lee",
-    email: "isabella.nguyen@email.com",
-    saleAmount: "+$1,999.00"
+    name: "فاطمة علي",
+    email: "fatima@emailxample.com",
+    date: "2025/03/01"
   },
   {
-    name: "Isabella Nguyen",
-    email: "isabella.nguyen@email.com",
-    saleAmount: "+$39.00"
+    name: "خالد أحمد",
+    email: "khaled@emailxample.com",
+    date: "2025/02/28"
   },
   {
-    name: "William Kim",
-    email: "will@email.com",
-    saleAmount: "+$299.00"
+    name: "عائشة بنت سعيد",
+    email: "aisha@emailxample.com",
+    date: "2025/03/02"
+  },
+
+  {
+    name: "زينب بنت محمد",
+    email: "zeinab@emailxample.com",
+    date: "2025/03/04"
   },
   {
-    name: "Sofia Davis",
-    email: "sofia.davis@email.com",
-    saleAmount: "+$39.00"
+    name: "ليلى بنت خالد",
+    email: "leila@emailxample.com",
+    date: "2025/03/06"
   }
 ];
 
@@ -119,15 +125,23 @@ export default function Home() {
       </section>
       <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2 p-6">
         <CardContent>
-          <p className="p-4 font-semibold">Overview</p>
+          <p className="p-4 font-semibold">المستجدات</p>
 
-          <BarChart />
+          <div className="flex flex-col gap-4">
+            <p className="bg-orange-50 rounded-full p-3">تم قبول طلب واحد ولديك رسالة</p>
+
+            <p className="bg-orange-50 rounded-full p-3">تم قبول طلب المساعدة المالية من فاطمة علي</p>
+
+            <p className="bg-orange-50 rounded-full p-3">تم قبول طلبك من فاطمة </p>
+
+
+          </div>
         </CardContent>
         <CardContent className="flex justify-between gap-4">
           <section>
-            <p>Recent Sales</p>
+            <p>الطلبات المقبولة</p>
             <p className="text-sm text-gray-400">
-              You made 265 sales this month.
+              لديك 8 طلبات مقبول
             </p>
           </section>
           {uesrSalesData.map((d, i) => (
@@ -135,7 +149,7 @@ export default function Home() {
               key={i}
               email={d.email}
               name={d.name}
-              saleAmount={d.saleAmount}
+              date={d.date}
             />
           ))}
         </CardContent>

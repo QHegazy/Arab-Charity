@@ -1,13 +1,9 @@
 'use client'
-import { Home, LogOut, MoreHorizontal } from "lucide-react";
+import { Home, LogOut, MoreHorizontal, HeartHandshake, LayoutList, BringToFront, Bot, BookHeart } from "lucide-react";
 import { SidebarDesktop } from "./sidebar-desktop";
 import { SidebarItems } from "@/types/sidebar";
 import { SidbarButton } from "./sidebar-button";
-
-
-
 const sidebarItems: SidebarItems = {
-
   links: [{
     label: "الرئيسية",
     href: "/user",
@@ -16,7 +12,7 @@ const sidebarItems: SidebarItems = {
   {
     label: "تبرع",
     href: "user/donate",
-    icon: Home
+    icon: HeartHandshake
   },
   {
     label: "تطوع",
@@ -26,24 +22,24 @@ const sidebarItems: SidebarItems = {
   {
     label: "اطلب خدمة",
     href: "/user/ai",
-    icon: Home
+    icon: LayoutList
   },
 
   {
     label: "الطلبات",
     href: "/user/orders",
-    icon: Home
+    icon: BringToFront
   },
   {
     label: "تواصل مع AI",
     href: "/user/ai",
-    icon: Home
+    icon: Bot
   },
 
   {
     label: "خدمة خاصة",
     href: "/user/requests",
-    icon: Home
+    icon: BookHeart
   },
 
 ],

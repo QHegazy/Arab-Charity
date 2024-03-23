@@ -12,7 +12,7 @@ import React from "react";
 export type SalesProps = {
   name: string;
   email: string;
-  saleAmount: string;
+  date: string;
 };
 
 export default function SalesCard(props: SalesProps) {
@@ -29,7 +29,7 @@ export default function SalesCard(props: SalesProps) {
             </div>
         </div>
       </section>
-        <p>{props.saleAmount}</p>
+        <p>{props.date}</p>
     </div>
   );
 }

@@ -182,5 +182,5 @@ enum Countries {
 }
 
 export class Country {
-  Countery: Countries;
+  Country: Countries;
 }

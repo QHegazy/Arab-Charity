@@ -5,15 +5,34 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { OrganizationsModule } from './organizations/organizations.module';
+import { PackagesModule } from './packages/packages.module';
+import { APP_FILTER } from '@nestjs/core';
+import { InventoryModule } from './inventory/inventory.module';
+import { CastErrorExceptionFilter } from './filters/cast-error.filter';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: 'development.env' }),
-    MongooseModule.forRoot(process.env.MONGODB_URI),
+    MongooseModule.forRootAsync({
+      useFactory: () => ({
+        uri: process.env.MONGODB_URI,
+        dbName: process.env.DBNAME,
+      }),
+    }),
     AuthModule,
     UsersModule,
+    OrganizationsModule,
+    PackagesModule,
+    InventoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: CastErrorExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

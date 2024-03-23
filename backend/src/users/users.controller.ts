@@ -99,7 +99,7 @@ export class UsersController {
   async updateUserByID(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<ResponseObject<User>> {
+  ): Promise<ResponseObject<string>> {
     try {
       const updatedUser = await this.usersService.updateUserByID(
         id,
@@ -124,7 +124,7 @@ export class UsersController {
   async updateUserByEmail(
     @Param('email', new ParseEmailPipe()) email: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<ResponseObject<User>> {
+  ): Promise<ResponseObject<string>> {
     try {
       const updatedUser = await this.usersService.updateUserByEmail(
         email,
@@ -144,7 +144,7 @@ export class UsersController {
   async updateUserByPhoneNumber(
     @Param('phoneNumber', new ParseIntPipe()) phoneNumber: number,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<ResponseObject<User>> {
+  ): Promise<ResponseObject<string>> {
     try {
       const updatedUser = await this.usersService.updateUserByPhoneNumber(
         phoneNumber,

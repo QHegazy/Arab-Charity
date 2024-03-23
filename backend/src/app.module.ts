@@ -13,7 +13,11 @@ import { CastErrorExceptionFilter } from './filters/cast-error.filter';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: 'development.env' }),
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+      envFilePath: 'development.env',
+    }),
     MongooseModule.forRootAsync({
       useFactory: () => ({
         uri: process.env.MONGODB_URI,

@@ -1,5 +1,4 @@
 'use client'
-
 import { CircleUserRound, Home, MoreHorizontal, Settings } from "lucide-react";
 import { SidbarButton } from "./sidebar-button";
 import { SidebarItems } from "@/types/sidebar";
@@ -17,6 +16,7 @@ interface sidebarDesktopProps {
 
 export function SidebarDesktop(props: sidebarDesktopProps) {
   const pathname = usePathname()
+  console.log(pathname)
   return (
     <aside className="lg:w-[270px] md:w-[88px] max-w-xs h-screen fixed top-0 rihgt-0 bg-white z-40 border-l">
       <div className="h-full px-3 py-4">
@@ -28,7 +28,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
           <div className="flex flex-col gap-3 w-full">
             {props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href}>
-                <SidbarButton icon={link.icon} className=" w-full" variant="secondary" >
+                <SidbarButton icon={link.icon} className=" w-full" variant={pathname === link.href ? "secondary" : "ghost"} >
                   {link.label}
                 </SidbarButton>
               </Link>
@@ -76,4 +76,4 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
       </div>
     </aside>
   );
-}
+} 

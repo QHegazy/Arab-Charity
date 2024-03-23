@@ -10,24 +10,43 @@ const sidebarItems: SidebarItems = {
 
   links: [{
     label: "الرئيسية",
-    href: "/",
-    icon: Home
-  },
-  {
-    label: "من نحن",
-    href: "user/dashboard",
+    href: "/user",
     icon: Home
   },
   {
     label: "تبرع",
-    href: "/donate",
+    href: "user/donate",
     icon: Home
   },
   {
-    label: "تواصل معنا",
-    href: "/contact",
+    label: "تطوع",
+    href: "user/volunteer",
     icon: Home
-  },],
+  },
+  {
+    label: "اطلب خدمة",
+    href: "/user/ai",
+    icon: Home
+  },
+
+  {
+    label: "الطلبات",
+    href: "/user/orders",
+    icon: Home
+  },
+  {
+    label: "تواصل مع AI",
+    href: "/user/ai",
+    icon: Home
+  },
+
+  {
+    label: "خدمة خاصة",
+    href: "/user/requests",
+    icon: Home
+  },
+
+],
   extra: (
     <div className="flex flex-col gap-3">
       <SidbarButton icon={MoreHorizontal} className="w-full">
@@ -41,10 +60,7 @@ const sidebarItems: SidebarItems = {
   )
 }
 
-
-
 export function Sidbar() {
-
 
   return (
     <SidebarDesktop sidebarItems={sidebarItems} />

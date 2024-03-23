@@ -24,7 +24,7 @@ export default function Hero() {
           <div className="image-container ">
             <Image
               alt="hero"
-              src="images/hero-vector.png"
+              src="/images/hero-vector.png"
               width={300}
               height={300}
 

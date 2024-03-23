@@ -22,8 +22,16 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
   @Post()
   @Header('Cache-Control', 'none')
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.createUser(createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<any> {
+    try {
+      const user = await this.usersService.createUser(createUserDto);
+      if (user) {
+        return new ResponseObject('success', 200, 'User created successfully');
+      }
+      return new ResponseObject('error', 404, 'User not  created', undefined);
+    } catch (error) {
+      throw error;
+    }
   }
 
   @Get(':id')

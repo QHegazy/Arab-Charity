@@ -8,6 +8,8 @@ import {
   registerDecorator,
   ValidationOptions,
   ValidationArguments,
+  IsNumber,
+  Min,
 } from 'class-validator';
 import { Country } from 'types/country/country';
 function IsDateInRange(
@@ -48,10 +50,9 @@ export class CreateUserDto {
   @MaxLength(50)
   readonly lastName: string;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(50)
+  @Min(0)
   readonly phoneNumber: number;
 
   @IsString()

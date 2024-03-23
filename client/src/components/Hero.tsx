@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Button } from "./ui/button"
 import Link from "next/link"
+import HeroImage from "@/../public/images/hero-vector.png"
 export default function Hero() {
   return (
     <section className="container  ">
@@ -24,11 +25,12 @@ export default function Hero() {
           <div className="image-container ">
             <Image
               alt="hero"
-              src="/images/hero-vector.png"
+              src={HeroImage}
               width={300}
               height={300}
 
             />
+
           </div>
           <Image
             className="-rotate-45 absolute top-[115px] left-[300px] "

@@ -1,10 +1,10 @@
-import Header from "@/components/ui/Header";
-import Hero from "@/components/ui/Hero";
-import Services from "@/components/ui/Services";
-import Content from "@/components/ui/Content";
-import Messag from "@/components/ui/Message";
-import ContentTwo from "@/components/ui/Contenttwo";
-import Footer from "@/components/ui/Footer";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import Services from "@/components/Services";
+import Content from "@/components/Content";
+import Messag from "@/components/Message";
+import ContentTwo from "@/components/Contenttwo";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
       <Content />
       <Messag />
       <ContentTwo />
-      <Footer/>
+      <Footer />
     </main>
   );
 }

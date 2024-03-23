@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-import { Button } from "./button"
+import { Button } from "./ui/button"
 import Link from "next/link";
 
 export default function Header() {
@@ -13,7 +13,7 @@ export default function Header() {
         </div>
         <div>
 
-          <nav className="transition-all duration-300">
+          <nav  className="transition-all duration-300">
             <section className="MOBILE-MENU flex md:hidden ">
               <div
                 className="HAMBURGER-ICON space-y-2 cursor-pointer"
@@ -57,7 +57,7 @@ export default function Header() {
                   >خدمات</Link>
 
                   <Button asChild className="w-full">
-                    <Link href="/signin">تسجيل</Link>
+                    <Link href="/login">تسجيل</Link>
                   </Button>
                 </ul>
               </div>
@@ -126,7 +126,7 @@ export default function Header() {
     `}</style>
         </div>
         <Button asChild className="hidden md:block ">
-          <Link href="/signin">
+          <Link href="/login">
             تسجيل
           </Link>
         </Button>

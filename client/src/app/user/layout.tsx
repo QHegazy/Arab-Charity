@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
+import { SidebarDesktop } from "@/components/sidebar-desktop";
+
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
@@ -12,7 +14,7 @@ export default function RootLayout({
 
 
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className="">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
@@ -28,8 +30,11 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="font-body bg-white bg-opacity-55 text-blue-950">
-        {children}
+      <body className="bg-orange-100 bg-opacity-55 text-blue-950">
+        <SidebarDesktop />
+        <main className="mr-[300px] mt-3">
+          {children}
+        </main>
       </body>
     </html>
   );

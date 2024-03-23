@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
-import Footer from "@/components/ui/Footer";
+import Footer from "@/components/Footer";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,9 +29,11 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="font-body bg-white bg-opacity-55 text-blue-950">
-        {children}
-        <Footer />
+      <body className="font-body bg-orange-100 text-blue-950">
+        <main className=" min-h-screen">
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   );

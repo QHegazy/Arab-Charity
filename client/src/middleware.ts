@@ -19,6 +19,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/user", request.nextUrl));
   }
 
+  // check the user type 
 
   // if (path === 'verifyemail' && !token) {
   //   return NextResponse.redirect(new URL('/', request.nextUrl))

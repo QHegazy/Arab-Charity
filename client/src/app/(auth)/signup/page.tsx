@@ -33,7 +33,7 @@ import { CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import Link from "next/link";
-import Header from "@/components/ui/Header";
+import Header from "@/components/Header";
 const formSchema = z
   .object({
     firstName: z.string(),
@@ -82,7 +82,7 @@ export default function Home() {
     <>
       <Header />
 
-      <div className="lg:h-screen py-11 flex items-center justify-center">
+      <div className=" py-11 flex min-h-screen items-center justify-center">
 
         <div className="container  mx-auto my-11">
           <div className=" md:w-[600px] m-auto bg-white p-10 rounded-3xl text-3xl font-semibold">
@@ -297,7 +297,7 @@ export default function Home() {
                 />
 
                 <Button type="submit" className="w-full mt-3 bg-blue-950 text-orange-50">
-                إنشاء حساب جديد
+                  إنشاء حساب جديد
                 </Button>
 
                 <Link className="text-lg mt-2"

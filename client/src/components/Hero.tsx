@@ -27,7 +27,7 @@ export default function Hero() {
               src="/images/hero-vector.png"
               width={300}
               height={300}
-              objectFit="cover"
+
             />
           </div>
           <Image
@@ -46,7 +46,7 @@ export default function Hero() {
             src="/images/Hero-image.jpeg"
             width={250}
             height={250}
-            objectFit="cover"
+
           />
         </div>
       </div>

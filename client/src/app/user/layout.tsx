@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { SidebarDesktop } from "@/components/sidebar-desktop";
-
+import { Sidbar } from "@/components/sidbar";
+import { Cairo } from "next/font/google"
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
+
+const cairo = Cairo({
+  weight: "400",
+  subsets: ["latin", "arabic"],
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
 
-
   return (
-    <html lang="ar" dir="rtl" className="">
+    <html lang="ar" dir="rtl" className={cairo.className}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
@@ -31,8 +36,10 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-orange-100 bg-opacity-55 text-blue-950">
-        <SidebarDesktop />
-        <main className="mr-[300px] mt-3">
+        <div className="hidden md:block">
+        <Sidbar/>
+        </div>
+        <main className="lg:mr-[280px] md:mr-[90px] md:mt-2">
           {children}
         </main>
       </body>

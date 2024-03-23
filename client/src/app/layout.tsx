@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import Footer from "@/components/Footer";
+import "@/app/globals.css";
+import { Sidbar } from "@/components/sidbar";
+import { Cairo } from "next/font/google"
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
+
+const cairo = Cairo({
+  
+  subsets: ["latin", "arabic"],
+});
 
 export default function RootLayout({
   children,
@@ -12,9 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className={cairo.className}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
@@ -30,7 +35,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className=" bg-orange-100 bg-opacity-55 text-blue-950">
+      <body className="bg-orange-100 bg-opacity-55 text-blue-950">
         {children}
       </body>
     </html>

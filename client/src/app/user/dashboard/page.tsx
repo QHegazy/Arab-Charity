@@ -3,9 +3,9 @@ export default function Home() {
 
 
   return (
-    <div className="bg-white p-10 w-full h-full">
+    <div className="bg-white p-10 w-full h-screen">
       <h2>
-        Welcome to the User Dashboard!
+        this the dashboard we are working on 
       </h2>
     </div>
 

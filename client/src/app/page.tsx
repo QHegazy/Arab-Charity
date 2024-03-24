@@ -12,14 +12,14 @@ import {
 export default function Home() {
   return (
     <main className="">
-    <Header />
-    <Hero />
-    <Services />
-    <Content />
-    <Messag />
-    <ContentTwo />
-    <Footer />
-  </main>
+      <Header />
+      <Hero />
+      <Services />
+      <Content />
+      <Messag />
+      <ContentTwo />
+      <Footer />
+    </main>
   )
 }
 

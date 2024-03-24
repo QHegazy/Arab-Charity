@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { Sidbar } from "@/components/sidbar";
-import { Cairo } from "next/font/google"
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
 
-const cairo = Cairo({
-  
-  subsets: ["latin", "arabic"],
-});
 
 export default function RootLayout({
   children,
@@ -19,7 +13,7 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="ar" dir="rtl" className={cairo.className}>
+    <html lang="ar" dir="rtl">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
@@ -35,7 +29,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="bg-orange-100 bg-opacity-55 text-blue-950">
+      <body className="bg-orange-100 bg-opacity-55 text-blue-950 font-body">
         {children}
       </body>
     </html>

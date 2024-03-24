@@ -1,8 +1,8 @@
 'use client'
 import { Home, LogOut, MoreHorizontal, HeartHandshake, LayoutList, BringToFront, Bot, BookHeart } from "lucide-react";
-import { SidebarDesktop } from "./sidebar-desktop";
+import { SidebarDesktop } from "./SidebarDesktop";
 import { SidebarItems } from "@/types/sidebar";
-import { SidbarButton } from "./sidebar-button";
+import { SidbarButton } from "./SidebarButton";
 const sidebarItems: SidebarItems = {
   links: [{
     label: "الرئيسية",
@@ -11,17 +11,17 @@ const sidebarItems: SidebarItems = {
   },
   {
     label: "تبرع",
-    href: "user/donate",
+    href: "/user/donate",
     icon: HeartHandshake
   },
   {
     label: "تطوع",
-    href: "user/volunteer",
+    href: "/user/volunteer",
     icon: Home
   },
   {
     label: "اطلب خدمة",
-    href: "/user/ai",
+    href: "/user/help",
     icon: LayoutList
   },
 
@@ -42,7 +42,7 @@ const sidebarItems: SidebarItems = {
     icon: BookHeart
   },
 
-],
+  ],
   extra: (
     <div className="flex flex-col gap-3">
       <SidbarButton icon={MoreHorizontal} className="w-full">

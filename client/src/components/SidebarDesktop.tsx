@@ -1,6 +1,6 @@
 'use client'
 import { CircleUserRound, Home, MoreHorizontal, Settings } from "lucide-react";
-import { SidbarButton } from "./sidebar-button";
+import { SidbarButton } from "./SidebarButton";
 import { SidebarItems } from "@/types/sidebar";
 import Link from "next/link";
 import { Separator } from "./ui/separator";
@@ -26,7 +26,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
         <div className="mt-5">
           <div className="flex flex-col gap-3 w-full">
             {props.sidebarItems.links.map((link, index) => (
-              <Link key={index} href={link.href}>
+              <Link key={index} href={link.href} passHref>
                 <SidbarButton icon={link.icon} className=" w-full" variant={pathname == link.href ? "secondary" : "ghost"} >
                   {link.label}
                 </SidbarButton>

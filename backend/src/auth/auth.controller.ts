@@ -15,37 +15,63 @@ import { AuthGuard } from 'src/guard/auth-guard/auth-guard.guard';
 @Controller({ version: '1', path: 'auth' })
 export class AuthController {
   constructor(private authService: AuthService) {}
-  @Get()
-  getHello(): string {
-    return 'Hello Worlds!';
-  }
-  @Post('email/login')
+
+  @Post('user/email/login')
   @HttpCode(200)
   async authUserByEmail(
     @Body() form: signInUpByEmail,
   ): Promise<ResponseObject<string>> {
     try {
-      const authData = await this.authService.signInByEmail(form);
+      const authData = await this.authService.signInByEmailForUser(form);
       return new ResponseObject('success', 200, 'auth success', authData);
     } catch (error) {
       throw error;
     }
   }
-  @Post('phone/login')
+  @Post('user/phone/login')
   @HttpCode(200)
   async authUserByPhoneNumber(
     @Body() form: signInUpByPassword,
   ): Promise<ResponseObject<string>> {
     try {
-      const authData = await this.authService.signInByPhoneNumber(form);
+      const authData = await this.authService.signInByPhoneNumberForUser(form);
+      return new ResponseObject('success', 200, 'auth success', authData);
+    } catch (error) {
+      throw error;
+    }
+  }
+  @Post('org/email/login')
+  @HttpCode(200)
+  async authOrgByEmail(
+    @Body() form: signInUpByEmail,
+  ): Promise<ResponseObject<string>> {
+    try {
+      const authData = await this.authService.signInByEmailForOrg(form);
+      return new ResponseObject('success', 200, 'auth success', authData);
+    } catch (error) {
+      throw error;
+    }
+  }
+  @Post('Org/phone/login')
+  @HttpCode(200)
+  async authUserByOrgNumber(
+    @Body() form: signInUpByPassword,
+  ): Promise<ResponseObject<string>> {
+    try {
+      const authData = await this.authService.signInByPhoneNumberForOrg(form);
       return new ResponseObject('success', 200, 'auth success', authData);
     } catch (error) {
       throw error;
     }
   }
   @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Req() req) {
+  @Get('user/profile')
+  getUserProfile(@Req() req) {
+    return req.user;
+  }
+  @UseGuards(AuthGuard)
+  @Get('org/profile')
+  getOrgProfile(@Req() req) {
     return req.user;
   }
 }

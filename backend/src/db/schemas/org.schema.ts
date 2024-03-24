@@ -1,8 +1,24 @@
-import { SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-export type OrganisationDocument = HydratedDocument<Organisation>;
+import { SignupSchema } from './Common/signup';
+export type OrgDocument = HydratedDocument<Org>;
 
-export class Organisation {
-  /*add schema */
+@Schema()
+export class Org extends SignupSchema {
+  @Prop({ required: true, type: String, minlength: 3, maxlength: 50 })
+  Name: string;
+
+  @Prop({ type: String, required: true })
+  Email: string;
+
+  @Prop({ type: String, required: true })
+  Location: string;
+
+  @Prop({ type: String, required: true })
+  Website: string;
+
+  @Prop({ type: Date, required: true })
+  DateOfEstablishmentOfInstitution: Date;
 }
-export const OrganisationSchema = SchemaFactory.createForClass(Organisation);
+
+export const OrgSchema = SchemaFactory.createForClass(Org);

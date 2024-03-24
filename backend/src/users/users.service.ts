@@ -6,6 +6,7 @@ import { UpdateUserDto } from 'src/Dto/user/update.user.dto';
 import { User } from 'src/db/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { PayloadUser } from 'types/payload';
 @Injectable()
 export class UsersService {
   constructor(
@@ -15,17 +16,17 @@ export class UsersService {
   saltOrRounds: number = 10;
   async createUser(createUserDto: CreateUserDto): Promise<any> {
     const password = await bcrypt.hash(
-      createUserDto.password,
+      createUserDto.Password,
       this.saltOrRounds,
     );
     const createdUser = new this.userModel();
-    createdUser.BirthDate = createUserDto.birthDate;
-    createdUser.FirstName = createUserDto.firstName;
-    createdUser.LastName = createUserDto.lastName;
-    createdUser.PhoneNumber = createUserDto.phoneNumber;
-    createdUser.Country = createUserDto.country;
-    createdUser.Email = createUserDto.email;
-    createdUser.Role = createUserDto.role;
+    createdUser.BirthDate = createUserDto.BirthDate;
+    createdUser.FirstName = createUserDto.FirstName;
+    createdUser.LastName = createUserDto.LastName;
+    createdUser.PhoneNumber = createUserDto.PhoneNumber;
+    createdUser.Country = createUserDto.Country;
+    createdUser.Email = createUserDto.Email;
+    createdUser.Role = createUserDto.Role;
     createdUser.Password = password;
 
     return createdUser.save();
@@ -49,35 +50,13 @@ export class UsersService {
     return this.userModel.find({ Role: role }).limit(limit).exec();
   }
   async updateUserByID(id: string, UpdateUser: UpdateUserDto): Promise<string> {
-    const updateFields: any = {
-      Country: UpdateUser.country,
-      Email: UpdateUser.email,
-      FirstName: UpdateUser.firstName,
-      LastName: UpdateUser.lastName,
-      PhoneNumber: UpdateUser.phoneNumber,
-      Role: UpdateUser.role,
-      BirthDate: UpdateUser.birthDate,
-    };
-
-    if (UpdateUser.password) {
-      updateFields.Password = await bcrypt.hash(
-        UpdateUser.password,
-        this.saltOrRounds,
-      );
-    }
-
+    const updateFields = await this.UpdateUser(UpdateUser);
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
       updateFields,
     );
-    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
-    const updatedToken = this.refreshToken({
-      FirstName,
-      LastName,
-      Role,
-      Country,
-      PhoneNumber,
-    });
+    const payload = this.Payload(updatedUser);
+    const updatedToken = this.refreshToken(payload);
     return updatedToken;
   }
 
@@ -85,35 +64,14 @@ export class UsersService {
     email: string,
     UpdateUser: UpdateUserDto,
   ): Promise<string> {
-    const updateFields: any = {
-      Country: UpdateUser.country,
-      Email: UpdateUser.email,
-      FirstName: UpdateUser.firstName,
-      LastName: UpdateUser.lastName,
-      PhoneNumber: UpdateUser.phoneNumber,
-      Role: UpdateUser.role,
-      BirthDate: UpdateUser.birthDate,
-    };
-
-    if (UpdateUser.password) {
-      updateFields.Password = await bcrypt.hash(
-        UpdateUser.password,
-        this.saltOrRounds,
-      );
-    }
+    const updateFields = await this.UpdateUser(UpdateUser);
 
     const updatedUser = await this.userModel.findByIdAndUpdate(
       { Email: email },
       updateFields,
     );
-    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
-    const updatedToken = this.refreshToken({
-      FirstName,
-      LastName,
-      Role,
-      Country,
-      PhoneNumber,
-    });
+    const payload = this.Payload(updatedUser);
+    const updatedToken = this.refreshToken(payload);
     return updatedToken;
   }
 
@@ -121,35 +79,14 @@ export class UsersService {
     phoneNumber: number,
     UpdateUser: UpdateUserDto,
   ): Promise<string> {
-    const updateFields: any = {
-      Country: UpdateUser.country,
-      Email: UpdateUser.email,
-      FirstName: UpdateUser.firstName,
-      LastName: UpdateUser.lastName,
-      PhoneNumber: UpdateUser.phoneNumber,
-      Role: UpdateUser.role,
-      BirthDate: UpdateUser.birthDate,
-    };
-
-    if (UpdateUser.password) {
-      updateFields.Password = await bcrypt.hash(
-        UpdateUser.password,
-        this.saltOrRounds,
-      );
-    }
+    const updateFields = await this.UpdateUser(UpdateUser);
 
     const updatedUser = await this.userModel.findByIdAndUpdate(
       { PhoneNumber: phoneNumber },
       updateFields,
     );
-    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
-    const updatedToken = this.refreshToken({
-      FirstName,
-      LastName,
-      Role,
-      Country,
-      PhoneNumber,
-    });
+    const payload = this.Payload(updatedUser);
+    const updatedToken = this.refreshToken(payload);
     return updatedToken;
   }
   async deleteUserByPhoneNumber(phoneNumber: number): Promise<User> {
@@ -172,5 +109,28 @@ export class UsersService {
   }
   refreshToken(payload: object): string {
     return this.jwtService.sign(payload);
+  }
+  private async UpdateUser(UpdateUser: any) {
+    const updateFields: any = {
+      Country: UpdateUser.Country,
+      Email: UpdateUser.Email,
+      FirstName: UpdateUser.FirstName,
+      LastName: UpdateUser.LastName,
+      PhoneNumber: UpdateUser.PhoneNumber,
+      Role: UpdateUser.Role,
+      BirthDate: UpdateUser.BirthDate,
+    };
+
+    if (UpdateUser.Password) {
+      updateFields.Password = await bcrypt.hash(
+        UpdateUser.Password,
+        this.saltOrRounds,
+      );
+    }
+    return updateFields;
+  }
+  private Payload(updatedOrg: UpdateUserDto): PayloadUser {
+    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedOrg;
+    return { FirstName, LastName, Role, Country, PhoneNumber };
   }
 }

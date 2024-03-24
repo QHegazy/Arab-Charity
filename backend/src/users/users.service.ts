@@ -129,8 +129,8 @@ export class UsersService {
     }
     return updateFields;
   }
-  private Payload(updatedOrg: UpdateUserDto): PayloadUser {
-    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedOrg;
+  private Payload(updatedUser: UpdateUserDto): PayloadUser {
+    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
     return { FirstName, LastName, Role, Country, PhoneNumber };
   }
 }

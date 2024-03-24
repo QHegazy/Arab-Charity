@@ -44,7 +44,9 @@ const formSchema = z
     country: z.string(),
     password: z.string().min(3),
     role: z.enum(["donor", "needy"]),
-    phoneNumber: z.string(),
+    phoneNumber: z.string().refine((val) => !isNaN(parseInt(val,10)), {
+      message : "ضع رقم هاتف صحيح"
+    }),
     birthDate: z.date({
       required_error: "تاريخ الميلاد مطلوب",
     }),
@@ -72,21 +74,22 @@ export default function Home() {
       phoneNumber: "",
       country: "",
 
-
     },
   });
 
   const router = useRouter()
   const [message, setMessage] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    setMessage("loading")
-    console.log({values});
-    try {
-      
-      const response = await axios.post("localhost:300/v1/users", values)
+    console.log({ values });
 
-      if (response.status === 201) {
+    try {
+      setMessage("loading")
+      const response = await axios.post("http://localhost:3001/v1/users", { ...values })
+      console.log(response.status)
+      if (response.status === 200) {
         router.push("/login")
         console.log('Signup successful:', response.data);
         setMessage("done singup")
@@ -189,6 +192,7 @@ export default function Home() {
                             placeholder="رقم الهاتف"
 
                             {...field}
+                            type="number"
                           />
                         </FormControl>
                         <FormMessage className="text-red-400" />

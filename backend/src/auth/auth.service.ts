@@ -18,15 +18,17 @@ export class AuthService {
   async signInByEmailForUser(form: signInUpByEmail): Promise<string> {
     try {
       const user = await this.userService.getUserByEmailPassword(form.email);
-      if (user) {
-        const isMatch = await bcrypt.compare(form.password, user.Password);
-        if (!isMatch) {
-          throw new UnauthorizedException();
-        }
-        const payload: PayloadUser = this.PayloadUser(user);
-        const token = await this.jwtService.sign(payload);
-        return token;
+      if (!user) {
+        throw new UnauthorizedException();
       }
+
+      const isMatch = await bcrypt.compare(form.password, user.Password);
+      if (!isMatch) {
+        throw new UnauthorizedException();
+      }
+      const payload: PayloadUser = this.PayloadUser(user);
+      const token = await this.jwtService.sign(payload);
+      return token;
     } catch (error) {
       throw error;
     }
@@ -36,15 +38,17 @@ export class AuthService {
       const user = await this.userService.getUserByPhoneNumberPassword(
         form.phoneNumber,
       );
-      if (user) {
-        const isMatch = await bcrypt.compare(form.password, user.Password);
-        if (!isMatch) {
-          throw new UnauthorizedException();
-        }
-        const payload: PayloadUser = this.PayloadUser(user);
-        const token = await this.jwtService.sign(payload);
-        return token;
+      if (!user) {
+        throw new UnauthorizedException();
       }
+
+      const isMatch = await bcrypt.compare(form.password, user.Password);
+      if (!isMatch) {
+        throw new UnauthorizedException();
+      }
+      const payload: PayloadUser = this.PayloadUser(user);
+      const token = await this.jwtService.sign(payload);
+      return token;
     } catch (error) {
       throw error;
     }
@@ -52,15 +56,17 @@ export class AuthService {
   async signInByEmailForOrg(form: signInUpByEmail): Promise<string> {
     try {
       const org = await this.orgService.getOrgByEmailPassword(form.email);
-      if (org) {
-        const isMatch = await bcrypt.compare(form.password, org.Password);
-        if (!isMatch) {
-          throw new UnauthorizedException();
-        }
-        const payload: PayloadOrg = this.PayloadOrg(org);
-        const token = await this.jwtService.sign(payload);
-        return token;
+      if (!org) {
+        throw new UnauthorizedException();
       }
+
+      const isMatch = await bcrypt.compare(form.password, org.Password);
+      if (!isMatch) {
+        throw new UnauthorizedException();
+      }
+      const payload: PayloadOrg = this.PayloadOrg(org);
+      const token = await this.jwtService.sign(payload);
+      return token;
     } catch (error) {
       throw error;
     }
@@ -70,15 +76,16 @@ export class AuthService {
       const org = await this.orgService.getOrgByPhoneNumberPassword(
         form.phoneNumber,
       );
-      if (org) {
-        const isMatch = await bcrypt.compare(form.password, org.Password);
-        if (!isMatch) {
-          throw new UnauthorizedException();
-        }
-        const payload: PayloadOrg = this.PayloadOrg(org);
-        const token = await this.jwtService.sign(payload);
-        return token;
+      if (!org) {
+        throw new UnauthorizedException();
       }
+      const isMatch = await bcrypt.compare(form.password, org.Password);
+      if (!isMatch) {
+        throw new UnauthorizedException();
+      }
+      const payload: PayloadOrg = this.PayloadOrg(org);
+      const token = await this.jwtService.sign(payload);
+      return token;
     } catch (error) {
       throw error;
     }

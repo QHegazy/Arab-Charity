@@ -12,7 +12,6 @@ export class CastErrorExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message: any = 'Internal Server Error';
     let error = 'Internal Server Error';
@@ -21,6 +20,14 @@ export class CastErrorExceptionFilter implements ExceptionFilter {
       status = HttpStatus.BAD_REQUEST;
       message = 'Please provide a valid ID';
       error = 'Invalid ID';
+    } else if (exception.message.includes('Duplicate entry')) {
+      status = HttpStatus.BAD_REQUEST;
+      message = exception.message;
+      error = 'Duplicate entry';
+    } else {
+      status = HttpStatus.INTERNAL_SERVER_ERROR;
+      message = exception.message;
+      error = 'Internal Server Error';
     }
 
     response.status(status).json({

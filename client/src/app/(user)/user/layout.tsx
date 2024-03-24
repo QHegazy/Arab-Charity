@@ -32,7 +32,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="bg-orange-50 bg-opacity-20  text-blue-950 font-body">
+      <body className="bg-orange-50 bg-opacity-10  text-blue-950 font-body">
         <div className="hidden md:block">
           <Sidbar />
         </div>

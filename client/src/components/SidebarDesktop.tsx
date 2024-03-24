@@ -25,16 +25,31 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
 
         <div className="mt-5">
           <div className="flex flex-col gap-3 w-full">
-            {props.sidebarItems.links.map((link, index) => (
+
+
+            {props.sidebarItems ? ( // Modified conditional check
+              props.sidebarItems.links?.map((link, index) => (
+                <Link key={index} href={link.href} passHref>
+                  <SidbarButton icon={link.icon} className=" w-full" variant={pathname == link.href ? "secondary" : "ghost"} >
+                    {link.label}
+                  </SidbarButton>
+                </Link>
+
+              ))
+            ) : (
+              null
+            )}
+
+            {/* { props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href} passHref>
                 <SidbarButton icon={link.icon} className=" w-full" variant={pathname == link.href ? "secondary" : "ghost"} >
                   {link.label}
                 </SidbarButton>
               </Link>
 
-            ))}
+            ))}*/}
 
-            {props.sidebarItems.extra}
+            {props.sidebarItems ? (props.sidebarItems.extra) : null} 
           </div>
           <div className=" absolute right-0 bottom-3 w-full px-3">
             <Separator className="absolute -top-3 right-0 bg-orange-300" />

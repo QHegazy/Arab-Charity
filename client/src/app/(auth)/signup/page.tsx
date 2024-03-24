@@ -43,14 +43,25 @@ const formSchema = z
     email: z.string().email(),
     country: z.string(),
     password: z.string().min(3),
-    role: z.enum(["donor", "needy"]),
-    phoneNumber: z.string().refine((val) => !isNaN(parseInt(val,10)), {
-      message : "ضع رقم هاتف صحيح"
+    role: z.enum(["donor", "needy", "org"]),
+    orgRole: z.enum(["provider", "distributor"]),
+    phoneNumber: z.string().refine((val) => !isNaN(parseInt(val, 10)), {
+      message: "ضع رقم هاتف صحيح"
     }),
     birthDate: z.date({
       required_error: "تاريخ الميلاد مطلوب",
-    }),
+    }).optional(),
+    orgName: z.string().optional(),
+    website: z.string().optional()
 
+  }).refine((data) => {
+    if (data.role === "org") {
+      return !data
+    }
+    return;
+  }, {
+    message: "اسم المنظمة مطلوب",
+    "path": ["orgName"]
   })
 // .refine(
 //   (data) => {
@@ -85,6 +96,8 @@ export default function Home() {
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
 
+    // TODO handle org request and button loading
+
     try {
       setMessage("loading")
       const response = await axios.post("http://localhost:3001/v1/users", { ...values })
@@ -102,7 +115,7 @@ export default function Home() {
     }
   };
 
-  console.log(message)
+  const role = form.watch("role")
 
   return (
     <>
@@ -118,88 +131,6 @@ export default function Home() {
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="flex flex-col gap-1"
               >
-                {/* first and last name */}
-                <div className='flex flex-col md:flex-row items-center gap-4 justify-between '>
-                  <FormField
-                    control={form.control} name='firstName'
-                    render={({ field }) => {
-                      return (
-                        <FormItem className='md:flex-1 w-full'>
-                          <FormLabel>الأسم الأول</FormLabel>
-                          <FormControl>
-                            <Input
-                              className='rounded-full w-full '
-                              placeholder='الأسم الأول'
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      );
-                    }} />
-                  <FormField control={form.control}
-                    name='lastName'
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          className='md:flex-1 w-full'>
-                          <FormLabel>الأسم الأول</FormLabel>
-                          <FormControl>
-                            <Input
-                              className='rounded-full w-full '
-                              {...field}
-                              placeholder='الأسم الأول'
-                              type='text' />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>);
-                    }} />
-                </div>
-
-                {/* email */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>البريد الإلكتروني</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="rounded-full w-full"
-                            placeholder="البريد الإلكتروني"
-                            type="email"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage className="text-red-400" />
-                      </FormItem>
-                    );
-                  }}
-                />
-
-                {/* phone number */}
-                <FormField
-                  control={form.control}
-                  name="phoneNumber"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>رقم الهاتف</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="rounded-full w-full"
-                            placeholder="رقم الهاتف"
-
-                            {...field}
-                            type="number"
-                          />
-                        </FormControl>
-                        <FormMessage className="text-red-400" />
-                      </FormItem>
-                    );
-                  }}
-                />
 
                 {/* account type */}
                 <FormField
@@ -222,6 +153,10 @@ export default function Home() {
                             <SelectItem
                               className=" cursor-pointer hover:bg-white rounded-3xl"
                               value="needy">محتاج</SelectItem>
+
+                            <SelectItem
+                              className=" cursor-pointer hover:bg-white rounded-3xl"
+                              value="org">منظمة</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -230,114 +165,350 @@ export default function Home() {
                   }}
                 />
 
-                {/* Country */}
-                <FormField
-                  control={form.control}
-                  name="country"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>البلد</FormLabel>
-                        <Select onValueChange={field.onChange}>
-                          <FormControl>
-                            <SelectTrigger className="rounded-full">
-                              <SelectValue placeholder="اختر البلد" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
-                            {arabCountries.map((name) => (
-                              <SelectItem
-                                key={name}
-                                className=" cursor-pointer hover:bg-white rounded-3xl"
-                                value={name}>{name}</SelectItem>
-                            ))}
+                {role === "org" ? (
+                  <div>
+                    {/* org name */}
+                    <FormField
+                      control={form.control} name='orgName'
+                      render={({ field }) => {
+                        return (
+                          <FormItem className='md:flex-1 w-full'>
+                            <FormLabel>أسم المنظمة</FormLabel>
+                            <FormControl>
+                              <Input
+                                className='rounded-full w-full '
+                                placeholder='الأسم الأول'
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }} />
+
+                    {/* email */}
+                    <FormField
+                      control={form.control} name='email'
+                      render={({ field }) => {
+                        return (
+                          <FormItem className='md:flex-1 w-full'>
+                            <FormLabel>البريد الإلكتروني </FormLabel>
+                            <FormControl>
+                              <Input
+                                type="email"
+                                className='rounded-full w-full '
+                                placeholder='البريد الإلكتروني '
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }} />
+                    <FormField
+                      control={form.control} name='phoneNumber'
+                      render={({ ...field }) => {
+                        return (
+                          <FormItem className='md:flex-1 w-full'>
+                            <FormLabel>رقم الهاتف</FormLabel>
+                            <FormControl>
+                              <Input
+                                className='rounded-full w-full '
+                                placeholder='رقم الهاتف'
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }} />
+                    {/* website */}
+
+                    <FormField
+                      control={form.control} name='website'
+                      render={({ field }) => {
+                        return (
+                          <FormItem className='md:flex-1 w-full'>
+                            <FormLabel>الموقع الإلكتروني </FormLabel>
+                            <FormControl>
+                              <Input
+                                className='rounded-full w-full '
+                                placeholder=' الموقع الإلكتروني'
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }} />
+
+                    {/* Country */}
+                    <FormField
+                      control={form.control}
+                      name="country"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>البلد</FormLabel>
+                            <Select onValueChange={field.onChange}>
+                              <FormControl>
+                                <SelectTrigger className="rounded-full">
+                                  <SelectValue placeholder="اختر البلد" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
+                                {arabCountries.map((name) => (
+                                  <SelectItem
+                                    key={name}
+                                    className=" cursor-pointer hover:bg-white rounded-3xl"
+                                    value={name}>{name}</SelectItem>
+                                ))}
 
 
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    />
 
-                {/* birth day */}
-                <FormField
-                  control={form.control}
-                  name="birthDate"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col mt-4">
-                      <FormLabel>تاريخ الميلاد</FormLabel>
-                      <Popover >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full rounded-full bg-orange-50 text-lg font-bold pl-3 text-left ",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "PPP")
-                              ) : (
-                                <span>اختر التاريخ</span>
-                              )}
-                              <CalendarIcon className="ml-3 h-4 w-4 " />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0 bg-orange-50 rounded-3xl" align="start">
-                          {/* <Calendar
-                            fromYear={1960}
-                            toYear={2010}
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          /> */}
+                    {/* org type */}
+                    <FormField
+                      control={form.control}
+                      name="orgRole"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>الدور</FormLabel>
+                            <Select onValueChange={field.onChange}>
+                              <FormControl>
+                                <SelectTrigger className="rounded-full">
+                                  <SelectValue placeholder="اختر دور المنظمة" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
+                                <SelectItem
+                                  className=" cursor-pointer hover:bg-white rounded-3xl"
+                                  value="distributor">موزرع</SelectItem>
+                                <SelectItem
+                                  className=" cursor-pointer hover:bg-white rounded-3xl"
+                                  value="provider">مزود</SelectItem>
 
-                          <Calendar
-                            mode="single"
-                            captionLayout="dropdown-buttons"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            fromYear={1960}
-                            toYear={2010}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormMessage />
-                    </FormItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    />
+
+                    {/* password */}
+                    <FormField
+                      control={form.control} name='password'
+                      render={({ field }) => {
+                        return (
+                          <FormItem className='md:flex-1 w-full'>
+                            <FormLabel>كلمة المرور </FormLabel>
+                            <FormControl>
+                              <Input
+                                className='rounded-full w-full '
+                                placeholder='كلمة المرور '
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }} />
+
+                  </div>
+                ) :
+                  (
+
+                    <div>
+
+                      {/* first and last name */}
+                      <div className='flex flex-col md:flex-row items-center gap-4 justify-between '>
+                        <FormField
+                          control={form.control} name='firstName'
+                          render={({ field }) => {
+                            return (
+                              <FormItem className='md:flex-1 w-full'>
+                                <FormLabel>الأسم الأول</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    className='rounded-full w-full '
+                                    placeholder='الأسم الأول'
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            );
+                          }} />
+                        <FormField control={form.control}
+                          name='lastName'
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                className='md:flex-1 w-full'>
+                                <FormLabel>الأسم الأول</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    className='rounded-full w-full '
+                                    {...field}
+                                    placeholder='الأسم الأول'
+                                    type='text' />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>);
+                          }} />
+                      </div>
+
+                      {/* email */}
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => {
+                          return (
+                            <FormItem>
+                              <FormLabel>البريد الإلكتروني</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className="rounded-full w-full"
+                                  placeholder="البريد الإلكتروني"
+                                  type="email"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage className="text-red-400" />
+                            </FormItem>
+                          );
+                        }}
+                      />
+
+                      {/* phone number */}
+                      <FormField
+                        control={form.control}
+                        name="phoneNumber"
+                        render={({ field }) => {
+                          return (
+                            <FormItem>
+                              <FormLabel>رقم الهاتف</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className="rounded-full w-full"
+                                  placeholder="رقم الهاتف"
+
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage className="text-red-400" />
+                            </FormItem>
+                          );
+                        }}
+                      />
+
+                      {/* Country */}
+                      <FormField
+                        control={form.control}
+                        name="country"
+                        render={({ field }) => {
+                          return (
+                            <FormItem>
+                              <FormLabel>البلد</FormLabel>
+                              <Select onValueChange={field.onChange}>
+                                <FormControl>
+                                  <SelectTrigger className="rounded-full">
+                                    <SelectValue placeholder="اختر البلد" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
+                                  {arabCountries.map((name) => (
+                                    <SelectItem
+                                      key={name}
+                                      className=" cursor-pointer hover:bg-white rounded-3xl"
+                                      value={name}>{name}</SelectItem>
+                                  ))}
+
+
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          );
+                        }}
+                      />
+
+                      {/* birth day */}
+                      <FormField
+                        control={form.control}
+                        name="birthDate"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col mt-4">
+                            <FormLabel>تاريخ الميلاد</FormLabel>
+                            <Popover >
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-full rounded-full bg-orange-50 text-lg font-bold pl-3 text-left ",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value ? (
+                                      format(field.value, "PPP")
+                                    ) : (
+                                      <span>اختر التاريخ</span>
+                                    )}
+                                    <CalendarIcon className="ml-3 h-4 w-4 " />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0 bg-orange-50 rounded-3xl" align="start">
+
+                                <Calendar
+                                  mode="single"
+                                  captionLayout="dropdown-buttons"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                  fromYear={1960}
+                                  toYear={2010}
+                                  disabled={(date) =>
+                                    date > new Date() || date < new Date("1900-01-01")
+                                  }
+                                  initialFocus
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/* Password */}
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => {
+                          return (
+                            <FormItem>
+                              <FormLabel>كلمة السر</FormLabel>
+                              <FormControl>
+                                <Input
+                                  className="rounded-full w-full"
+                                  placeholder="كلمة السر"
+                                  type="Password" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    </div>
                   )}
-                />
-
-                {/* Password */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>كلمة السر</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="rounded-full w-full"
-                            placeholder="كلمة السر"
-                            type="Password" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
 
                 <Button type="submit" className="w-full mt-3 bg-blue-950 text-orange-50">
                   إنشاء حساب جديد
@@ -352,7 +523,7 @@ export default function Home() {
 
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 }

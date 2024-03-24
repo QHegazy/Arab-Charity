@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { Sidbar } from "@/components/UserSidbar";
+import { Sidbar } from "@/components/OrgSidebar";
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
-
-
-
 
 export default function RootLayout({
   children,

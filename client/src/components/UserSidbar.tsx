@@ -33,7 +33,7 @@ const sidebarItems: SidebarItems = {
   },
   {
     label: "تواصل مع AI",
-    href: "/user/ai",
+    href: "/user/ai-chat",
     icon: Bot
   },
 
@@ -46,9 +46,6 @@ const sidebarItems: SidebarItems = {
   ],
   extra: (
     <div className="flex flex-col gap-3">
-      <SidbarButton icon={MoreHorizontal} className="w-full">
-        المزيد
-      </SidbarButton>
 
       <SidbarButton variant="outline" icon={LogOut} className="w-full">
         تسجيل الخروج

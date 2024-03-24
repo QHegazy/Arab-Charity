@@ -52,7 +52,7 @@ export default function Home() {
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
     try {
-      const response = await axios.post("/api/login", values)
+      const response = await axios.post("localhost:3000/v1/auth/email/login", values)
       if (response.status === 200) {
         // successful login
         Cookies.set('user_tooken', response.data.data)

@@ -54,6 +54,7 @@ export class UsersService {
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
       updateFields,
+      { new: true },
     );
     const payload = this.Payload(updatedUser);
     const updatedToken = this.refreshToken(payload);

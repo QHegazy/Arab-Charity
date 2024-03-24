@@ -35,6 +35,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 const formSchema = z
   .object({
     firstName: z.string(),
@@ -76,15 +77,19 @@ export default function Home() {
   });
 
   const router = useRouter()
+  const [message, setMessage] = useState("")
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values.birthDate);
+    setMessage("loading")
+    console.log({values});
     try {
+      
       const response = await axios.post("localhost:300/v1/users", values)
 
       if (response.status === 201) {
         router.push("/login")
         console.log('Signup successful:', response.data);
+        setMessage("done singup")
       } else {
         console.error('Signup failed:', response.data);
       }
@@ -93,6 +98,8 @@ export default function Home() {
       console.error('Signup error:', error);
     }
   };
+
+  console.log(message)
 
   return (
     <>
@@ -277,10 +284,25 @@ export default function Home() {
                           </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-orange-50 rounded-3xl" align="start">
-                          <Calendar
+                          {/* <Calendar
+                            fromYear={1960}
+                            toYear={2010}
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          /> */}
+
+                          <Calendar
+                            mode="single"
+                            captionLayout="dropdown-buttons"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            fromYear={1960}
+                            toYear={2010}
                             disabled={(date) =>
                               date > new Date() || date < new Date("1900-01-01")
                             }

@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 import Header from "@/components/Header";
-import { Cookie } from "next/font/google";
 const formSchema = z
   .object({
     email: z.string().email(),

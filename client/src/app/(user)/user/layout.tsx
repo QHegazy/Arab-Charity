@@ -35,11 +35,11 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="bg-orange-100 bg-opacity-55 text-blue-950">
+      <body className="bg-orange-50 bg-opacity-20  text-blue-950">
         <div className="hidden md:block">
-        <Sidbar/>
+          <Sidbar />
         </div>
-        <main className="lg:mr-[280px] md:mr-[90px] md:mt-2">
+        <main className="lg:mr-[280px] md:mr-[90px]">
           {children}
         </main>
       </body>

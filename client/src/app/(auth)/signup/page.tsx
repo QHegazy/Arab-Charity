@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/select";
 
 import { arabCountries } from "@/constants/arabCountries";
-import { Icon } from '@iconify/react';
 
 import {
   Popover,
@@ -29,32 +28,34 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, User } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import Link from "next/link";
 import Header from "@/components/Header";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 const formSchema = z
   .object({
-    firstName: z.string(),
-    lastName: z.string(),
-    emailAddress: z.string().email(),
-    country: z.string(),
-    password: z.string().min(3),
-    accountType: z.enum(["donor", "needy"]),
-    phoneNumber: z.string(),
-    dob: z.date({
+    FirstName: z.string(),
+    LastName: z.string(),
+    Email: z.string().email(),
+    Country: z.string(),
+    Password: z.string().min(3),
+    Role: z.enum(["donor", "needy"]),
+    PhoneNumber: z.string(),
+    BirthDate: z.date({
       required_error: "تاريخ الميلاد مطلوب",
     }),
 
   })
 // .refine(
 //   (data) => {
-//     return data.password === data.passwordConfirm;
+//     return data.Password === data.PasswordConfirm;
 //   },
 //   {
 //     message: "Passwords do not match",
-//     path: ["passwordConfirm"],
+//     path: ["PasswordConfirm"],
 //   }
 // )
 
@@ -63,19 +64,33 @@ export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      // firstName: "",
-      lastName: "",
-      emailAddress: "",
-      password: "",
-      phoneNumber: "",
-      country: "",
+      FirstName: "",
+      LastName: "",
+      Email: "",
+      Password: "",
+      PhoneNumber: "",
+      Country: "",
 
     },
   });
 
+  const router = useRouter()
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
+    try {
+      const response = await axios.post("localhost:300/v1/users", values)
+
+      if (response.status === 201) {
+        router.push("/login")
+        console.log('Signup successful:', response.data);
+      } else {
+        console.error('Signup failed:', response.data);
+      }
+
+    } catch (error) {
+      console.error('Signup error:', error);
+    }
   };
 
   return (
@@ -95,7 +110,7 @@ export default function Home() {
                 {/* first and last name */}
                 <div className='flex flex-col md:flex-row items-center gap-4 justify-between '>
                   <FormField
-                    control={form.control} name='firstName'
+                    control={form.control} name='FirstName'
                     render={({ field }) => {
                       return (
                         <FormItem className='md:flex-1 w-full'>
@@ -112,7 +127,7 @@ export default function Home() {
                       );
                     }} />
                   <FormField control={form.control}
-                    name='lastName'
+                    name='LastName'
                     render={({ field }) => {
                       return (
                         <FormItem
@@ -133,7 +148,7 @@ export default function Home() {
                 {/* email */}
                 <FormField
                   control={form.control}
-                  name="emailAddress"
+                  name="Email"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -152,9 +167,10 @@ export default function Home() {
                   }}
                 />
 
+                {/* phone number */}
                 <FormField
                   control={form.control}
-                  name="phoneNumber"
+                  name="PhoneNumber"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -176,7 +192,7 @@ export default function Home() {
                 {/* account type */}
                 <FormField
                   control={form.control}
-                  name="accountType"
+                  name="Role"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -202,10 +218,10 @@ export default function Home() {
                   }}
                 />
 
-                {/* country */}
+                {/* Country */}
                 <FormField
                   control={form.control}
-                  name="country"
+                  name="Country"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -236,7 +252,7 @@ export default function Home() {
                 {/* birth day */}
                 <FormField
                   control={form.control}
-                  name="dob"
+                  name="BirthDate"
                   render={({ field }) => (
                     <FormItem className="flex flex-col mt-4">
                       <FormLabel>تاريخ الميلاد</FormLabel>
@@ -276,10 +292,10 @@ export default function Home() {
                   )}
                 />
 
-                {/* password */}
+                {/* Password */}
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="Password"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -288,7 +304,7 @@ export default function Home() {
                           <Input
                             className="rounded-full w-full"
                             placeholder="كلمة السر"
-                            type="password" {...field} />
+                            type="Password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

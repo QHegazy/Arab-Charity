@@ -1,5 +1,4 @@
 'use client'
-
 import { CircleUserRound, Home, MoreHorizontal, Settings } from "lucide-react";
 import { SidbarButton } from "./sidebar-button";
 import { SidebarItems } from "@/types/sidebar";
@@ -21,14 +20,14 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
     <aside className="lg:w-[270px] md:w-[88px] max-w-xs h-screen fixed top-0 rihgt-0 bg-white z-40 border-l">
       <div className="h-full px-3 py-4">
         <h3 className="lg:block text-lg font-semibold text-blue-950 ">
-          HOME
+          Arab charity
         </h3>
 
         <div className="mt-5">
           <div className="flex flex-col gap-3 w-full">
             {props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href}>
-                <SidbarButton icon={link.icon} className=" w-full" variant="secondary" >
+                <SidbarButton icon={link.icon} className=" w-full" variant={pathname == link.href ? "secondary" : "ghost"} >
                   {link.label}
                 </SidbarButton>
               </Link>
@@ -38,7 +37,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
             {props.sidebarItems.extra}
           </div>
           <div className=" absolute right-0 bottom-3 w-full px-3">
-            <Separator className="absolute -top-3 right-0 bg-orange-400" />
+            <Separator className="absolute -top-3 right-0 bg-orange-300" />
             <Popover>
               <PopoverTrigger asChild>
                 <Button className="w-full justify-start items-center" >
@@ -47,7 +46,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
 
                       <Avatar className="h-5 w-5 rounded-full">
                         <AvatarImage />
-                        <AvatarFallback>User</AvatarFallback>
+                        {/* <AvatarFallback>User</AvatarFallback> */}
                       </Avatar>
                       <span className="hidden lg:block">User name </span>
                     </div>
@@ -76,4 +75,4 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
       </div>
     </aside>
   );
-}
+} 

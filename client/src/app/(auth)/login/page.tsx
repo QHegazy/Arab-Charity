@@ -21,7 +21,7 @@ import Header from "@/components/Header";
 import { Cookie } from "next/font/google";
 const formSchema = z
   .object({
-    emailAddress: z.string().email(),
+    email: z.string().email(),
     password: z.string().min(8),
 
   })
@@ -40,7 +40,7 @@ export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailAddress: "",
+      email: "",
       password: "",
 
     },
@@ -61,7 +61,7 @@ export default function Home() {
         console.log("login failed")
       }
 
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
 
@@ -83,7 +83,7 @@ export default function Home() {
                 {/* email */}
                 <FormField
                   control={form.control}
-                  name="emailAddress"
+                  name="email"
                   render={({ field }) => {
                     return (
                       <FormItem>

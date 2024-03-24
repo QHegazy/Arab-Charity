@@ -37,14 +37,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 const formSchema = z
   .object({
-    FirstName: z.string(),
-    LastName: z.string(),
-    Email: z.string().email(),
-    Country: z.string(),
-    Password: z.string().min(3),
-    Role: z.enum(["donor", "needy"]),
-    PhoneNumber: z.string(),
-    BirthDate: z.date({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email(),
+    country: z.string(),
+    password: z.string().min(3),
+    role: z.enum(["donor", "needy"]),
+    phoneNumber: z.string(),
+    birthDate: z.date({
       required_error: "تاريخ الميلاد مطلوب",
     }),
 
@@ -64,12 +64,13 @@ export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      FirstName: "",
-      LastName: "",
-      Email: "",
-      Password: "",
-      PhoneNumber: "",
-      Country: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      phoneNumber: "",
+      country: "",
+
 
     },
   });
@@ -77,7 +78,7 @@ export default function Home() {
   const router = useRouter()
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
+    console.log(values.birthDate);
     try {
       const response = await axios.post("localhost:300/v1/users", values)
 
@@ -110,7 +111,7 @@ export default function Home() {
                 {/* first and last name */}
                 <div className='flex flex-col md:flex-row items-center gap-4 justify-between '>
                   <FormField
-                    control={form.control} name='FirstName'
+                    control={form.control} name='firstName'
                     render={({ field }) => {
                       return (
                         <FormItem className='md:flex-1 w-full'>
@@ -127,7 +128,7 @@ export default function Home() {
                       );
                     }} />
                   <FormField control={form.control}
-                    name='LastName'
+                    name='lastName'
                     render={({ field }) => {
                       return (
                         <FormItem
@@ -148,7 +149,7 @@ export default function Home() {
                 {/* email */}
                 <FormField
                   control={form.control}
-                  name="Email"
+                  name="email"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -170,7 +171,7 @@ export default function Home() {
                 {/* phone number */}
                 <FormField
                   control={form.control}
-                  name="PhoneNumber"
+                  name="phoneNumber"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -192,7 +193,7 @@ export default function Home() {
                 {/* account type */}
                 <FormField
                   control={form.control}
-                  name="Role"
+                  name="role"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -221,7 +222,7 @@ export default function Home() {
                 {/* Country */}
                 <FormField
                   control={form.control}
-                  name="Country"
+                  name="country"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -252,7 +253,7 @@ export default function Home() {
                 {/* birth day */}
                 <FormField
                   control={form.control}
-                  name="BirthDate"
+                  name="birthDate"
                   render={({ field }) => (
                     <FormItem className="flex flex-col mt-4">
                       <FormLabel>تاريخ الميلاد</FormLabel>
@@ -295,7 +296,7 @@ export default function Home() {
                 {/* Password */}
                 <FormField
                   control={form.control}
-                  name="Password"
+                  name="password"
                   render={({ field }) => {
                     return (
                       <FormItem>

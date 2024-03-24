@@ -18,10 +18,9 @@ import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 import Header from "@/components/Header";
-import { Cookie } from "next/font/google";
 const formSchema = z
   .object({
-    emailAddress: z.string().email(),
+    email: z.string().email(),
     password: z.string().min(8),
 
   })
@@ -40,7 +39,7 @@ export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      emailAddress: "",
+      email: "",
       password: "",
 
     },
@@ -52,16 +51,16 @@ export default function Home() {
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
     try {
-      const response = await axios.post("/api/login", values)
+      const response = await axios.post("http://localhost:3001/v1/auth/email/login", {...values})
       if (response.status === 200) {
         // successful login
         Cookies.set('user_tooken', response.data.data)
         router.push("/user")
       } else {
-        console.log("login failed")
+        console.log("login failed ", response.data)
       }
 
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
 
@@ -83,7 +82,7 @@ export default function Home() {
                 {/* email */}
                 <FormField
                   control={form.control}
-                  name="emailAddress"
+                  name="email"
                   render={({ field }) => {
                     return (
                       <FormItem>

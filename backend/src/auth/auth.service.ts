@@ -17,12 +17,12 @@ export class AuthService {
   ) {}
   async signInByEmailForUser(form: signInEmail): Promise<string> {
     try {
-      const user = await this.userService.getUserByEmailPassword(form.email);
+      const user = await this.userService.getUserByEmailPassword(form.Email);
       if (!user) {
         throw new UnauthorizedException();
       }
 
-      const isMatch = await bcrypt.compare(form.password, user.Password);
+      const isMatch = await bcrypt.compare(form.Password, user.Password);
       if (!isMatch) {
         throw new UnauthorizedException();
       }
@@ -36,13 +36,13 @@ export class AuthService {
   async signInByPhoneNumberForUser(form: signInPhone): Promise<string> {
     try {
       const user = await this.userService.getUserByPhoneNumberPassword(
-        form.phoneNumber,
+        form.PhoneNumber,
       );
       if (!user) {
         throw new UnauthorizedException();
       }
 
-      const isMatch = await bcrypt.compare(form.password, user.Password);
+      const isMatch = await bcrypt.compare(form.Password, user.Password);
       if (!isMatch) {
         throw new UnauthorizedException();
       }
@@ -55,12 +55,12 @@ export class AuthService {
   }
   async signInByEmailForOrg(form: signInEmail): Promise<string> {
     try {
-      const org = await this.orgService.getOrgByEmailPassword(form.email);
+      const org = await this.orgService.getOrgByEmailPassword(form.Email);
       if (!org) {
         throw new UnauthorizedException();
       }
 
-      const isMatch = await bcrypt.compare(form.password, org.Password);
+      const isMatch = await bcrypt.compare(form.Password, org.Password);
       if (!isMatch) {
         throw new UnauthorizedException();
       }
@@ -75,12 +75,12 @@ export class AuthService {
   async signInByPhoneNumberForOrg(form: signInPhone): Promise<string> {
     try {
       const org = await this.orgService.getOrgByPhoneNumberPassword(
-        form.phoneNumber,
+        form.PhoneNumber,
       );
       if (!org) {
         throw new UnauthorizedException();
       }
-      const isMatch = await bcrypt.compare(form.password, org.Password);
+      const isMatch = await bcrypt.compare(form.Password, org.Password);
       if (!isMatch) {
         throw new UnauthorizedException();
       }

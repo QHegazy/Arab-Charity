@@ -12,87 +12,84 @@ import { AuthService } from './auth.service';
 import { signInEmail, signInPhone } from 'src/Dto/sign.in/sign.in';
 import { AuthGuard } from 'src/guard/auth-guard/auth-guard.guard';
 import { Response } from 'express';
+import { ResponseObject } from 'src/messages/message';
 
 @Controller({ version: '1', path: 'auth' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('user/email/login')
+  @Post('user/email')
   @HttpCode(200)
   async authUserByEmail(
     @Res({ passthrough: true }) res: Response,
     @Body() form: signInEmail,
-  ): Promise<void> {
+  ): Promise<ResponseObject<void>> {
     try {
       const authToken = await this.authService.signInByEmailForUser(form);
-      res
-        .cookie('access_token', authToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'lax',
-          expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-        })
-        .send({ status: 'ok' });
+      res.cookie('access_token', authToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+      });
+      return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
     } catch (error) {
       throw error;
     }
   }
-  @Post('user/phone/login')
+  @Post('user/phone/')
   @HttpCode(200)
   async authUserByPhoneNumber(
     @Res({ passthrough: true }) res: Response,
     @Body() form: signInPhone,
-  ): Promise<void> {
+  ): Promise<ResponseObject<void>> {
     try {
       const authToken = await this.authService.signInByPhoneNumberForUser(form);
-      res
-        .cookie('access_token', authToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'lax',
-          expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-        })
-        .send({ status: 'ok' });
+      res.cookie('access_token', authToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+      });
+      return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
     } catch (error) {
       throw error;
     }
   }
-  @Post('org/email/login')
+  @Post('org/email')
   @HttpCode(200)
   async authOrgByEmail(
     @Res({ passthrough: true }) res: Response,
     @Body() form: signInEmail,
-  ): Promise<void> {
+  ): Promise<ResponseObject<void>> {
     try {
       const authToken = await this.authService.signInByEmailForOrg(form);
-      res
-        .cookie('access_token', authToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'lax',
-          expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-        })
-        .send({ status: 'ok' });
+      res.cookie('access_token', authToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+      });
+      return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
     } catch (error) {
       throw error;
     }
   }
-  @Post('Org/phone/login')
+  @Post('Org/phone')
   @HttpCode(200)
   async authUserByOrgNumber(
     @Body() form: signInPhone,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<void> {
+  ): Promise<ResponseObject<void>> {
     try {
       const authToken = await this.authService.signInByPhoneNumberForOrg(form);
-      res
-        .cookie('access_token', authToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: 'lax',
-          expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-        })
-        .send({ status: 'ok' });
+      res.cookie('access_token', authToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+      });
+      return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
     } catch (error) {
       throw error;
     }
@@ -108,15 +105,9 @@ export class AuthController {
     return req.user;
   }
   @UseGuards(AuthGuard)
-  @Post('user/logout')
+  @Post('logout')
   logout(@Res({ passthrough: true }) res: Response) {
     res.clearCookie('access_token');
-    return res.send({ status: 'ok' });
-  }
-  @UseGuards(AuthGuard)
-  @Post('org/logout')
-  logoutOrg(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('access_token');
-    return res.send({ status: 'ok' });
+    return new ResponseObject('success', 200, 'Cookie ssuccessfully cleared');
   }
 }

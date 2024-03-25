@@ -10,21 +10,21 @@ import {
 export class signInEmail {
   @IsNotEmpty()
   @IsEmail()
-  email?: string;
+  Email?: string;
 
   @IsNotEmpty()
   @IsString()
-  password: string;
+  Password: string;
 }
 
 export class signInPhone {
   @IsNotEmpty()
   @IsString()
-  password: string;
+  Password: string;
 
   @IsOptional()
   @IsNumber()
   @IsNotEmpty()
   @Min(0)
-  phoneNumber: number;
+  PhoneNumber: number;
 }

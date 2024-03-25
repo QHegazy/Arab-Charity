@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { Toaster } from "@/components/ui/toaster"
-
+import { Sidbar } from "@/components/OrgSidebar";
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
 };
-import Footer from "@/components/Footer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
 
   return (
     <html lang="ar" dir="rtl">
@@ -31,12 +29,13 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="font-body bg-orange-100 text-blue-950">
-        <main className=" min-h-screen">
+      <body className="bg-orange-50 bg-opacity-10  text-blue-950 font-body">
+        <div className="hidden md:block">
+          <Sidbar />
+        </div>
+        <main className="lg:mr-[280px] md:mr-[90px]">
           {children}
-          <Footer />
         </main>
-        <Toaster />
       </body>
     </html>
   );

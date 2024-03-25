@@ -7,8 +7,6 @@ export const metadata: Metadata = {
   description: "the arab charity website",
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,7 +38,6 @@ export default function RootLayout({
           {children}
         </main>
         <Toaster />
-
       </body>
     </html>
   );

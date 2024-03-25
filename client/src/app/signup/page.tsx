@@ -111,10 +111,20 @@ export default function Home() {
         console.log('Signup successful:', response.data);
         setMessage("done singup")
       } else {
+        toast({
+          variant: "destructive",
+          title: "Singup fail ",
+          description: response.data.message,
+        })
         console.error('Signup failed:', response.data);
       }
 
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Singup fail ",
+        description: `${error}`,
+      })
       console.error('Signup error:', error);
     }
   };

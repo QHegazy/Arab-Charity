@@ -61,13 +61,23 @@ export default function Home() {
           description: "welcome back",
         })
 
-        Cookies.set('user_tooken', response.data.data)
         router.push("/user")
       } else {
+        toast({
+          variant: "destructive",
+          title: "Singup fail ",
+          description: response.data.message,
+        })
+        
         console.log("login failed ", response.data)
       }
 
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Singup fail ",
+        description: `${error}`,
+      })
       console.log(error)
     }
 

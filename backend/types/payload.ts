@@ -12,4 +12,6 @@ export interface PayloadUser extends Payload {
 }
 export interface PayloadOrg extends Payload {
   Name: string;
+  Website: string;
+  Location: string;
 }

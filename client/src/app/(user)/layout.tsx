@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import { Sidbar } from "@/components/UserSidbar";
+import { Toaster } from "@/components/ui/toaster"
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
@@ -38,6 +39,8 @@ export default function RootLayout({
         <main className="lg:mr-[280px] md:mr-[90px]">
           {children}
         </main>
+        <Toaster />
+
       </body>
     </html>
   );

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast"
 
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -46,14 +47,20 @@ export default function Home() {
   });
 
   const router = useRouter();
+  const { toast } = useToast()
 
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
     try {
-      const response = await axios.post("http://localhost:3001/v1/auth/email/login", {...values})
+      const response = await axios.post("http://localhost:3001/v1/auth/email/login", { ...values })
       if (response.status === 200) {
         // successful login
+        toast({
+          title: "login successfuly ",
+          description: "welcome back",
+        })
+
         Cookies.set('user_tooken', response.data.data)
         router.push("/user")
       } else {

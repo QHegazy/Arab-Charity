@@ -6,7 +6,19 @@ import { UsersController } from './users.controller';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: User.name,
+        useFactory: () => {
+          const schema = UserSchema;
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          schema.plugin(require('mongoose-unique-validator'), {
+            message: 'Duplicate entry',
+          });
+          return schema;
+        },
+      },
+    ]),
   ],
   providers: [UsersService],
   exports: [UsersService],

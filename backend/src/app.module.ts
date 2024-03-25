@@ -10,6 +10,7 @@ import { PackagesModule } from './packages/packages.module';
 import { APP_FILTER } from '@nestjs/core';
 import { InventoryModule } from './inventory/inventory.module';
 import { CastErrorExceptionFilter } from './filters/cast-error.filter';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CastErrorExceptionFilter } from './filters/cast-error.filter';
     OrganizationsModule,
     PackagesModule,
     InventoryModule,
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [

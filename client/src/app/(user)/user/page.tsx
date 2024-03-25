@@ -8,68 +8,7 @@ import Card, { CardContent, CardProps } from "@/components/Card";
 import BarChart from "@/components/BarChart";
 import SalesCard, { SalesProps } from "@/components/SalesCard";
 
-const cardData: CardProps[] = [
-  {
-    label: "مسكن",
-    amount: "ليلتان",
-    discription: "مأوى الطوارئ",
-    icon: CircleUserRound
-  },
-  {
-    label: "مواصلات",
-    amount: "تذكرة حافلة",
-    discription: "للتوجه إلى مقابلة عمل",
-    icon: CircleUserRound
-  },
-  {
-    label: "دعم مالي",
-    amount: "500 ريال ",
-    discription: "مساعدة طارئة",
-    icon: CircleUserRound
-  },
-  {
-    label: "مهارات حياتية",
-    amount: "دورة ورشة عمل",
-    discription: "إدارة الميزانية",
-    icon: CircleUserRound
-  },
-  {
-    label: "دعم قانوني",
-    amount: "استشارة مجانية لمدة ساعة",
-    discription: "مع المحامي علي حسن",
-    icon: CircleUserRound
-  },
-  {
-    label: "مسكن",
-    amount: "ليلتان",
-    discription: "مأوى الطوارئ",
-    icon: CircleUserRound
-  },
-  {
-    label: "مواصلات",
-    amount: "تذكرة حافلة",
-    discription: "للتوجه إلى مقابلة عمل",
-    icon: CircleUserRound
-  },
-  {
-    label: "دعم مالي",
-    amount: "500 ريال ",
-    discription: "مساعدة طارئة",
-    icon: CircleUserRound
-  },
-  {
-    label: "مهارات حياتية",
-    amount: "دورة ورشة عمل",
-    discription: "إدارة الميزانية",
-    icon: CircleUserRound
-  },
-  {
-    label: "دعم قانوني",
-    amount: "استشارة مجانية لمدة ساعة",
-    discription: "مع المحامي علي حسن",
-    icon: CircleUserRound
-  },
-];
+
 
 const uesrSalesData: SalesProps[] = [
   {
@@ -112,7 +51,7 @@ export default function Home() {
         <PageTitle title="الرئيسية" />
       </div>
 
-      <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4 ">
+      {/* <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4 ">
         {cardData.map((d, i) => (
           <Card
             key={i}
@@ -122,7 +61,7 @@ export default function Home() {
             label={d.label}
           />
         ))}
-      </section>
+      </section> */}
       <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2 ">
         <CardContent>
           <p className="p-4 font-semibold">المستجدات</p>
@@ -139,7 +78,7 @@ export default function Home() {
         </CardContent>
         <CardContent className="flex justify-between gap-4">
           <section>
-            <p>الطلبات المقبولة</p>
+            <p>الطلبات </p>
             <p className="text-sm text-gray-400">
               لديك 8 طلبات مقبول
             </p>

@@ -12,36 +12,26 @@ import SalesCard, { SalesProps } from "@/components/SalesCard";
 
 const uesrSalesData: SalesProps[] = [
   {
-    name: "موسى محمد",
-    email: "mose@emailxample.com",
+    name: "طلب استشارة",
+    description: "ساعة استشارة مع خالد الحازمي",
     date: "2025/02/25"
   },
   {
-    name: "فاطمة علي",
-    email: "fatima@emailxample.com",
-    date: "2025/03/01"
+    name: "مساعدة طبية",
+    description: "تقديم مساعدة طبية للمحتاجين بتوفير الدواء",
+    date: "2025/06/10"
   },
   {
-    name: "خالد أحمد",
-    email: "khaled@emailxample.com",
-    date: "2025/02/28"
+    name: "تبرع بالملابس",
+    description: "تبرع بالملابس الشتوية للأطفال الفقراء",
+    date: "2025/07/15"
   },
   {
-    name: "عائشة بنت سعيد",
-    email: "aisha@emailxample.com",
-    date: "2025/03/02"
+    name: "تبرع بالمأكولات",
+    description: "تبرع بسلة غذائية للأسر المحتاجة",
+    date: "2025/05/20"
   },
 
-  {
-    name: "زينب بنت محمد",
-    email: "zeinab@emailxample.com",
-    date: "2025/03/04"
-  },
-  {
-    name: "ليلى بنت خالد",
-    email: "leila@emailxample.com",
-    date: "2025/03/06"
-  }
 ];
 
 export default function Home() {
@@ -58,7 +48,7 @@ export default function Home() {
             amount={d.amount}
             discription={d.discription}
             icon={d.icon}
-            label={d.label}
+            title={d.label}
           />
         ))}
       </section> */}
@@ -80,13 +70,13 @@ export default function Home() {
           <section>
             <p>الطلبات </p>
             <p className="text-sm text-gray-400">
-              لديك 8 طلبات مقبول
+              لديك 4 طلبات مقبول
             </p>
           </section>
           {uesrSalesData.map((d, i) => (
             <SalesCard
               key={i}
-              email={d.email}
+              description={d.description}
               name={d.name}
               date={d.date}
             />

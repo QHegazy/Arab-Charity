@@ -2,6 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/components/ui/use-toast"
 import {
   Form,
   FormControl,
@@ -38,13 +39,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 const formSchema = z
   .object({
-    firstName: z.string(),
-    lastName: z.string(),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
     email: z.string().email(),
     country: z.string(),
     password: z.string().min(3),
     role: z.enum(["donor", "needy", "org"]),
-    orgRole: z.enum(["provider", "distributor"]),
+    orgRole: z.enum(["provider", "distributor"]).optional(),
     phoneNumber: z.string().refine((val) => !isNaN(parseInt(val, 10)), {
       message: "ضع رقم هاتف صحيح"
     }),
@@ -54,14 +55,6 @@ const formSchema = z
     orgName: z.string().optional(),
     website: z.string().optional()
 
-  }).refine((data) => {
-    if (data.role === "org") {
-      return !data
-    }
-    return;
-  }, {
-    message: "اسم المنظمة مطلوب",
-    "path": ["orgName"]
   })
 // .refine(
 //   (data) => {
@@ -84,9 +77,12 @@ export default function Home() {
       password: "",
       phoneNumber: "",
       country: "",
+      orgName: "",
+      website: ""
 
     },
   });
+  const { toast } = useToast()
 
   const router = useRouter()
   const [message, setMessage] = useState("")
@@ -95,6 +91,10 @@ export default function Home() {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
+    toast({
+      title: "Singup successfuly ",
+      description: "pleas login",
+    })
 
     // TODO handle org request and button loading
 
@@ -103,14 +103,28 @@ export default function Home() {
       const response = await axios.post("http://localhost:3001/v1/users", { ...values })
       console.log(response.status)
       if (response.status === 200) {
+        toast({
+          title: "Singup successfuly ",
+          description: "pleas login",
+        })
         router.push("/login")
         console.log('Signup successful:', response.data);
         setMessage("done singup")
       } else {
+        toast({
+          variant: "destructive",
+          title: "Singup fail ",
+          description: response.data.message,
+        })
         console.error('Signup failed:', response.data);
       }
 
     } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Singup fail ",
+        description: `${error}`,
+      })
       console.error('Signup error:', error);
     }
   };
@@ -213,6 +227,7 @@ export default function Home() {
                             <FormLabel>رقم الهاتف</FormLabel>
                             <FormControl>
                               <Input
+                                type="tel"
                                 className='rounded-full w-full '
                                 placeholder='رقم الهاتف'
                                 {...field}
@@ -398,6 +413,7 @@ export default function Home() {
                               <FormLabel>رقم الهاتف</FormLabel>
                               <FormControl>
                                 <Input
+                                  type="tel"
                                   className="rounded-full w-full"
                                   placeholder="رقم الهاتف"
 

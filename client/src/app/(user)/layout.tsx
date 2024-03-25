@@ -6,14 +6,14 @@ export default function RootLayout({
 }>) {
 
   return (
-    <>
+    <div className="bg-orange-50 bg-opacity-20 min-h-screen">
       <div className="hidden md:block">
         <Sidbar />
       </div>
-      <main className="lg:mr-[280px] md:mr-[90px]">
+      <main className="lg:mr-[270px] md:mr-[90px]">
         {children}
       </main>
-    </>
+    </div>
 
   );
 }

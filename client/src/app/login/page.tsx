@@ -68,7 +68,7 @@ export default function Home() {
           title: "Singup fail ",
           description: response.data.message,
         })
-        
+
         console.log("login failed ", response.data)
       }
 
@@ -84,7 +84,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <div className="bg-orange-100 bg-opacity-55">
       <Header />
       <div className=" min-h-screen py-11 flex items-center justify-center">
 
@@ -151,6 +151,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

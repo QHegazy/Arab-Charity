@@ -132,7 +132,7 @@ export default function Home() {
   const role = form.watch("role")
 
   return (
-    <>
+    <div className="bg-orange-100 bg-opacity-55">
       <Header />
 
       <div className=" py-11 flex min-h-screen items-center justify-center">
@@ -540,6 +540,6 @@ export default function Home() {
           </div>
         </div>
       </div >
-    </>
+    </div>
   );
 }

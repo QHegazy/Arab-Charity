@@ -129,7 +129,7 @@ export class OrganizationsService {
     return updateFields;
   }
   private Payload(updatedOrg: UpdateOrgDto): PayloadOrg {
-    const { Name, Role, Country, PhoneNumber } = updatedOrg;
-    return { Name, Role, Country, PhoneNumber };
+    const { Name, Role, Country, PhoneNumber, Location, Website } = updatedOrg;
+    return { Name, Role, Country, PhoneNumber, Location, Website };
   }
 }

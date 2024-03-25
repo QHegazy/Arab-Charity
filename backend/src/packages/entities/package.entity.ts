@@ -4,7 +4,7 @@ import { Commodity } from './package.interface';
 export type PackageDocument = HydratedDocument<Package>;
 
 @Schema()
-export class Package implements Commodity {
+export class Package {
   @Prop({ required: true, type: String, minlength: 3, maxlength: 50 })
   Commodity: string;
 

@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import { signInUpByEmail, signInUpByPassword } from 'src/Dto/sign.in/sign.in';
+import { signInEmail, signInPhone } from 'src/Dto/sign.in/sign.in';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/db/schemas/user.schema';
@@ -15,7 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
     private orgService: OrganizationsService,
   ) {}
-  async signInByEmailForUser(form: signInUpByEmail): Promise<string> {
+  async signInByEmailForUser(form: signInEmail): Promise<string> {
     try {
       const user = await this.userService.getUserByEmailPassword(form.email);
       if (!user) {
@@ -33,7 +33,7 @@ export class AuthService {
       throw error;
     }
   }
-  async signInByPhoneNumberForUser(form: signInUpByPassword): Promise<string> {
+  async signInByPhoneNumberForUser(form: signInPhone): Promise<string> {
     try {
       const user = await this.userService.getUserByPhoneNumberPassword(
         form.phoneNumber,
@@ -53,7 +53,7 @@ export class AuthService {
       throw error;
     }
   }
-  async signInByEmailForOrg(form: signInUpByEmail): Promise<string> {
+  async signInByEmailForOrg(form: signInEmail): Promise<string> {
     try {
       const org = await this.orgService.getOrgByEmailPassword(form.email);
       if (!org) {
@@ -66,12 +66,13 @@ export class AuthService {
       }
       const payload: PayloadOrg = this.PayloadOrg(org);
       const token = await this.jwtService.sign(payload);
+
       return token;
     } catch (error) {
       throw error;
     }
   }
-  async signInByPhoneNumberForOrg(form: signInUpByPassword): Promise<string> {
+  async signInByPhoneNumberForOrg(form: signInPhone): Promise<string> {
     try {
       const org = await this.orgService.getOrgByPhoneNumberPassword(
         form.phoneNumber,
@@ -95,7 +96,7 @@ export class AuthService {
     return { FirstName, LastName, Role, Country, PhoneNumber };
   }
   private PayloadOrg(org: Org): PayloadOrg {
-    const { Name, Role, Country, PhoneNumber } = org;
-    return { Name, Role, Country, PhoneNumber };
+    const { Name, Role, Country, PhoneNumber, Location, Website } = org;
+    return { Name, Role, Country, PhoneNumber, Location, Website };
   }
 }

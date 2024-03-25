@@ -107,7 +107,7 @@ const uesrSalesData: SalesProps[] = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-5  w-full p-6">
+    <div className="flex flex-col gap-5   w-full p-6">
       <div className="">
         <PageTitle title="الرئيسية" />
       </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "@/app/globals.css";
+import "./globals.css";
+import { Toaster } from "@/components/ui/toaster"
 export const metadata: Metadata = {
   title: "Arab Charity",
   description: "the arab charity website",
@@ -11,7 +12,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="ar" dir="rtl">
       <head>
@@ -29,8 +29,11 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="bg-orange-100 bg-opacity-55 text-blue-950 font-body">
-        {children}
+      <body className="">
+        <main>
+          {children}
+        </main>
+        <Toaster />
       </body>
     </html>
   );

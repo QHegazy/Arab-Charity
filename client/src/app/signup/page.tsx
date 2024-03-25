@@ -44,11 +44,9 @@ const formSchema = z
     email: z.string().email(),
     country: z.string(),
     password: z.string().min(3),
-    role: z.enum(["donor", "needy", "org"]),
+    role: z.enum(["donor", "Beneficiary", "org"]),
     orgRole: z.enum(["provider", "distributor"]).optional(),
-    phoneNumber: z.string().refine((val) => !isNaN(parseInt(val, 10)), {
-      message: "ضع رقم هاتف صحيح"
-    }),
+    phoneNumber: z.string(),
     birthDate: z.date({
       required_error: "تاريخ الميلاد مطلوب",
     }).optional(),
@@ -91,16 +89,14 @@ export default function Home() {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
-    toast({
-      title: "Singup successfuly ",
-      description: "pleas login",
-    })
+
 
     // TODO handle org request and button loading
-
+    setMessage("loading")
     try {
-      setMessage("loading")
-      const response = await axios.post("http://localhost:3001/v1/users", { ...values })
+      const endpoint = values.role === "org" ? "/v1/org" : "v1/users"
+      
+      const response = await axios.post("http://localhost:3001" + endpoint, { ...values })
       console.log(response.status)
       if (response.status === 200) {
         toast({
@@ -166,7 +162,7 @@ export default function Home() {
                               value="donor">متبرع</SelectItem>
                             <SelectItem
                               className=" cursor-pointer hover:bg-white rounded-3xl"
-                              value="needy">محتاج</SelectItem>
+                              value="Beneficiary">مستفيد</SelectItem>
 
                             <SelectItem
                               className=" cursor-pointer hover:bg-white rounded-3xl"
@@ -178,7 +174,6 @@ export default function Home() {
                     );
                   }}
                 />
-
                 {role === "org" ? (
                   <div>
                     {/* org name */}
@@ -219,6 +214,7 @@ export default function Home() {
                           </FormItem>
                         );
                       }} />
+                    {/* phone number */}
                     <FormField
                       control={form.control} name='phoneNumber'
                       render={({ ...field }) => {
@@ -227,7 +223,6 @@ export default function Home() {
                             <FormLabel>رقم الهاتف</FormLabel>
                             <FormControl>
                               <Input
-                                type="tel"
                                 className='rounded-full w-full '
                                 placeholder='رقم الهاتف'
                                 {...field}
@@ -413,7 +408,6 @@ export default function Home() {
                               <FormLabel>رقم الهاتف</FormLabel>
                               <FormControl>
                                 <Input
-                                  type="tel"
                                   className="rounded-full w-full"
                                   placeholder="رقم الهاتف"
 

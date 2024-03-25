@@ -103,7 +103,7 @@ export default function Home() {
 
   return (
     <div className={`w-full min-h-screen p-6 ${cairo.className}`}>
-      <PageTitle title="تبرع" />
+      <PageTitle title="الخدمات المتوفرة" />
       <section className="grid mt-6 w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4 ">
         {cardData.map((d, i) => (
           <Dialog key={i} >

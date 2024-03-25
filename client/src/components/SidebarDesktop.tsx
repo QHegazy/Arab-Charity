@@ -49,7 +49,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
 
             ))}*/}
 
-            {props.sidebarItems ? (props.sidebarItems.extra) : null} 
+            {props.sidebarItems ? (props.sidebarItems.extra) : null}
           </div>
           <div className=" absolute right-0 bottom-3 w-full px-3">
             <Separator className="absolute -top-3 right-0 bg-orange-300" />
@@ -79,8 +79,8 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
                     </SidbarButton>
                   </Link>
 
-                  <SidbarButton icon={Settings} size="sm" className="w-full text-sm">
-                    تسجيل الخروج
+                  <SidbarButton icon={MoreHorizontal} size="sm" className="w-full text-sm ">
+                    المزيد
                   </SidbarButton>
                 </div>
               </PopoverContent>

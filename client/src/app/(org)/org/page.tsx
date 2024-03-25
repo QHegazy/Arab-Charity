@@ -10,61 +10,61 @@ import SalesCard, { SalesProps } from "@/components/SalesCard";
 
 const cardData: CardProps[] = [
   {
-    label: "مسكن",
+    title: "مسكن",
     amount: "ليلتان",
     discription: "مأوى الطوارئ",
     icon: CircleUserRound
   },
   {
-    label: "مواصلات",
+    title: "مواصلات",
     amount: "تذكرة حافلة",
     discription: "للتوجه إلى مقابلة عمل",
     icon: CircleUserRound
   },
   {
-    label: "دعم مالي",
+    title: "دعم مالي",
     amount: "500 ريال ",
     discription: "مساعدة طارئة",
     icon: CircleUserRound
   },
   {
-    label: "مهارات حياتية",
+    title: "مهارات حياتية",
     amount: "دورة ورشة عمل",
     discription: "إدارة الميزانية",
     icon: CircleUserRound
   },
   {
-    label: "دعم قانوني",
+    title: "دعم قانوني",
     amount: "استشارة مجانية لمدة ساعة",
     discription: "مع المحامي علي حسن",
     icon: CircleUserRound
   },
   {
-    label: "مسكن",
+    title: "مسكن",
     amount: "ليلتان",
     discription: "مأوى الطوارئ",
     icon: CircleUserRound
   },
   {
-    label: "مواصلات",
+    title: "مواصلات",
     amount: "تذكرة حافلة",
     discription: "للتوجه إلى مقابلة عمل",
     icon: CircleUserRound
   },
   {
-    label: "دعم مالي",
+    title: "دعم مالي",
     amount: "500 ريال ",
     discription: "مساعدة طارئة",
     icon: CircleUserRound
   },
   {
-    label: "مهارات حياتية",
+    title: "مهارات حياتية",
     amount: "دورة ورشة عمل",
     discription: "إدارة الميزانية",
     icon: CircleUserRound
   },
   {
-    label: "دعم قانوني",
+    title: "دعم قانوني",
     amount: "استشارة مجانية لمدة ساعة",
     discription: "مع المحامي علي حسن",
     icon: CircleUserRound
@@ -74,33 +74,33 @@ const cardData: CardProps[] = [
 const uesrSalesData: SalesProps[] = [
   {
     name: "موسى محمد",
-    email: "mose@emailxample.com",
+    description: "mose@descriptionxample.com",
     date: "2025/02/25"
   },
   {
     name: "فاطمة علي",
-    email: "fatima@emailxample.com",
+    description: "fatima@descriptionxample.com",
     date: "2025/03/01"
   },
   {
     name: "خالد أحمد",
-    email: "khaled@emailxample.com",
+    description: "khaled@descriptionxample.com",
     date: "2025/02/28"
   },
   {
     name: "عائشة بنت سعيد",
-    email: "aisha@emailxample.com",
+    description: "aisha@descriptionxample.com",
     date: "2025/03/02"
   },
 
   {
     name: "زينب بنت محمد",
-    email: "zeinab@emailxample.com",
+    description: "zeinab@descriptionxample.com",
     date: "2025/03/04"
   },
   {
     name: "ليلى بنت خالد",
-    email: "leila@emailxample.com",
+    description: "leila@descriptionxample.com",
     date: "2025/03/06"
   }
 ];
@@ -119,7 +119,7 @@ export default function Home() {
             amount={d.amount}
             discription={d.discription}
             icon={d.icon}
-            label={d.label}
+            title={d.title}
           />
         ))}
       </section>
@@ -147,7 +147,7 @@ export default function Home() {
           {uesrSalesData.map((d, i) => (
             <SalesCard
               key={i}
-              email={d.email}
+              description={d.description}
               name={d.name}
               date={d.date}
             />

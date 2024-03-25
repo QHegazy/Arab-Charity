@@ -5,7 +5,7 @@ import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type CardProps = {
-  label: string;
+  title: string;
   icon: LucideIcon;
   amount: string;
   discription: string;
@@ -15,8 +15,8 @@ export default function Card(props: CardProps) {
   return (
     <CardContent>
       <section className="flex justify-between gap-2">
-        {/* label */}
-        <p className="text-sm text-blue-950">{props.label}</p>
+        {/* title */}
+        <p className="text-sm text-blue-950">{props.title}</p>
         {/* icon */}
         <props.icon className="h-4 w-4 text-blue-950" />
       </section>

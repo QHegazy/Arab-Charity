@@ -7,13 +7,14 @@ export const metadata: Metadata = {
 };
 
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className="!scroll-smooth">
+    <html lang="ar" dir="rtl" className="!scroll-smooth font-body">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
@@ -29,7 +30,7 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </head>
-      <body className="">
+      <body className="font-body">
         <main>
           {children}
         </main>

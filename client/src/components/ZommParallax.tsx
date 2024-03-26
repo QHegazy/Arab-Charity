@@ -1,7 +1,7 @@
 'use client'
 import styles from '../app/styles.module.css';
-import Picture1 from '@/../public/zoom/1.jpeg';
-import Picture2 from '@/../public/zoom/2.jpeg';
+import Picture1 from '@/../public/zoom/1.jpg';
+import Picture2 from '@/../public/zoom/2.jpg';
 import Picture3 from '@/../public/zoom/3.jpg';
 import Picture4 from '@/../public/zoom/4.jpg'
 import Picture5 from '@/../public/zoom/5.jpg'

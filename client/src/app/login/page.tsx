@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie"
+import { AxiosError } from 'axios';
 import {
   Form,
   FormControl,
@@ -19,10 +20,11 @@ import { useToast } from "@/components/ui/use-toast"
 
 import Link from "next/link";
 import Header from "@/components/Header";
+import { useState } from "react";
 const formSchema = z
   .object({
-    email: z.string().email(),
-    password: z.string().min(8),
+    Email: z.string().email(),
+    Password: z.string().min(8),
 
   })
 // .refine(
@@ -40,48 +42,62 @@ export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      Email: "",
+      Password: "",
 
     },
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast()
 
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
+
+    setIsLoading(true)
     try {
-      const response = await axios.post("http://localhost:3001/v1/auth/email/login", { ...values })
+
+      const response = await axios.post("http://localhost:3000/v1/auth/user/email", { ...values })
+
       if (response.status === 200) {
-        // successful login
+        console.log(response.headers)
+        console.log("login successful: ", response.data)
         toast({
-          title: "login successfuly ",
+          title: "Login successfuly ",
           description: "welcome back",
         })
-
         router.push("/user")
+      } else {
+        console.log(response.data.message)
+        toast({
+          variant: "destructive",
+          title: "login faild ",
+          description: "pleas try again",
+        })
+      }
+    } catch (error) {
+      //@ts-ignore
+      if (error.response) {
+        console.log(error)
+        toast({
+          variant: "destructive",
+          title: "تعذر تسجيل الدخول",
+          description: "معلومات الدخول خاطئة",
+        })
       } else {
         toast({
           variant: "destructive",
-          title: "Singup fail ",
-          description: response.data.message,
+          title: "خطاء ",
+          description: "خطاء غير متوقع حاول مجددا لاحقا",
         })
-
-        console.log("login failed ", response.data)
       }
 
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Singup fail ",
-        description: `${error}`,
-      })
-      console.log(error)
+    } finally {
+      setIsLoading(false)
     }
 
-  };
+  }
 
   return (
     <div className="bg-orange-100 bg-opacity-55">
@@ -99,7 +115,7 @@ export default function Home() {
                 {/* email */}
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="Email"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -121,7 +137,7 @@ export default function Home() {
                 {/* password */}
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="Password"
                   render={({ field }) => {
                     return (
                       <FormItem>

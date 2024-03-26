@@ -9,7 +9,7 @@ export default function RootLayout({
 
   return (
     <div className={`bg-orange-50 bg-opacity-20 min-h-screen ${cario.className}`}>
-      <div className="hidden md:block">
+      <div >
         <Sidbar />
       </div>
       <main className="lg:mr-[280px] md:mr-[90px]">

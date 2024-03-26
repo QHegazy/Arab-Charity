@@ -6,6 +6,7 @@ import Services from "./Services";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import Card from "./Card";
+import ZommParallax from "./ZommParallax";
 
 export {
   Content,
@@ -16,5 +17,6 @@ export {
   Footer,
   Hero,
   Card,
+  ZommParallax,
 };
 

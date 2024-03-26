@@ -9,7 +9,7 @@ export default function Services() {
   }
   const ServiceCard = ({ title, style, imageSrc }: CardProps) => {
     return (
-      <div className={`${style} text-center mt-6 w-[130px] h-[100px] rounded-3xl relative`}>
+      <div className={`${style}  text-center mt-6 w-[130px] h-[100px] rounded-3xl relative`}>
         <div className="w-[60px] h-[60px] bg-slate-100 rounded-full
           absolute -top-1/3 left-[27%] flex items-center justify-center ">
           <Image
@@ -30,7 +30,7 @@ export default function Services() {
   }
 
   return (
-    <section className="services w-full bg-white">
+    <section className="services w-full bg-white my-[6rem]" id="services">
       <div className="container flex items-center justify-center flex-wrap gap-5 lg:gap-4 my-11 py-[5rem]">
         <ServiceCard
           title="تعليم"

@@ -32,7 +32,7 @@ export class CreateOrgDto extends Signup {
 
   @IsDateString()
   @IsNotEmpty()
-  @IsDateInRange(1980, 2021, {
+  @IsDateInRange(1960, 2024, {
     message: 'The Date must be between 1980 and 2021.',
   })
   DateOfEstablishmentOfInstitution: Date;

@@ -7,24 +7,24 @@ import {
   Min,
 } from 'class-validator';
 
-export class signInUpByEmail {
+export class signInEmail {
   @IsNotEmpty()
   @IsEmail()
-  email?: string;
+  Email?: string;
 
   @IsNotEmpty()
   @IsString()
-  password: string;
+  Password: string;
 }
 
-export class signInUpByPassword {
+export class signInPhone {
   @IsNotEmpty()
   @IsString()
-  password: string;
+  Password: string;
 
   @IsOptional()
   @IsNumber()
   @IsNotEmpty()
   @Min(0)
-  phoneNumber: number;
+  PhoneNumber: number;
 }

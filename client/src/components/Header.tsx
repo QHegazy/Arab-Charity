@@ -13,7 +13,7 @@ export default function Header() {
         </div>
         <div>
 
-          <nav  className="transition-all duration-300">
+          <nav className="transition-all duration-300">
             <section className="MOBILE-MENU flex md:hidden ">
               <div
                 className="HAMBURGER-ICON space-y-2 cursor-pointer"
@@ -46,13 +46,13 @@ export default function Header() {
                   <Link href="/"
                     className="border-b border-gray-400 my-2 w-full p-2 hover:bg-orange-300 rounded-full transition-all duration-300 "
                   >الرئيسية</Link>
-                  <Link href="/about"
+                  <Link href="#about"
                     className="border-b border-gray-400 my-2 w-full p-2 hover:bg-orange-300 rounded-full transition-all duration-300 "
                   >من نحن</Link>
-                  <Link href="/contact"
+                  <Link href="#contact"
                     className="border-b border-gray-400 my-2 w-full p-2 hover:bg-orange-300 rounded-full transition-all duration-300 "
                   >تواصل</Link>
-                  <Link href="/services"
+                  <Link href="#services"
                     className="border-b border-gray-400 my-2 w-full p-2 hover:bg-orange-300 rounded-full transition-all duration-300 "
                   >خدمات</Link>
 
@@ -71,19 +71,19 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link href="/about"
+                <Link href="#about"
                   className="text-xl font-light text-blue-950 hover:text-orange-400 transition-colors duration-200 ">
                   من نحن
                 </Link>
               </li>
               <li>
-                <Link href="/contact"
+                <Link href="#contact"
                   className="text-xl font-light text-blue-950 hover:text-orange-400 transition-colors duration-200 ">
                   تواصل
                 </Link>
               </li>
               <li>
-                <Link href="/services"
+                <Link href="#services"
                   className="text-xl font-light text-blue-950 hover:text-orange-400 transition-colors duration-200 ">
                   الخدمات
                 </Link>

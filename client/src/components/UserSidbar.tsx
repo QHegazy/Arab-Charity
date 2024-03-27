@@ -22,13 +22,13 @@ const sidebarItems: SidebarItems = {
 
   {
     label: "اطلب خدمة خاصة",
-    href: "/user/custom-order",
+    href: "/user/custom-service",
     icon: LayoutList
   },
 
   {
     label: "الخدمات المتوفرة",
-    href: "/user/orders",
+    href: "/user/services",
     icon: BringToFront
   },
   {

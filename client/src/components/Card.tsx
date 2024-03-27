@@ -13,7 +13,7 @@ export type CardProps = {
 
 export default function Card(props: CardProps) {
   return (
-    <CardContent>
+    <CardContent className="rounded-3xl">
       <section className="flex justify-between gap-2">
         {/* title */}
         <p className="text-sm text-blue-950">{props.title}</p>

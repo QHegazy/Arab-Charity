@@ -12,7 +12,7 @@ export default function RootLayout({
       <div>
         <Sidbar />
       </div>
-      <main className="lg:mr-[270px] md:mr-[90px]">
+      <main className="lg:mr-[270px] md:mr-[90px] font-body">
         {children}
       </main>
     </div>

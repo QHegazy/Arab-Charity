@@ -20,15 +20,18 @@ const sidebarItems: SidebarItems = {
     icon: HeartHandshake
   },
   {
-    label: "تطوع",
-    href: "/org/volunteer",
+    label: "نشر فرصة تطوع",
+    href: "/org/add-volunteer-opportunity",
     icon: Home
   },
+
+
   {
-    label: "اطلب خدمة",
-    href: "/org/help",
-    icon: LayoutList
+    label: "نشر خدمة",
+    href: "/org/add-service",
+    icon: BookHeart
   },
+
 
   {
     label: "الطلبات",
@@ -37,22 +40,14 @@ const sidebarItems: SidebarItems = {
   },
   {
     label: "تواصل مع AI",
-    href: "/org/ai",
+    href: "/org/ai-chat",
     icon: Bot
   },
 
-  {
-    label: "خدمة خاصة",
-    href: "/org/requests",
-    icon: BookHeart
-  },
 
   ],
   extra: (
     <div className="flex flex-col gap-3">
-      <SidbarButton icon={MoreHorizontal} className="w-full">
-        المزيد
-      </SidbarButton>
 
       <SidbarButton variant="outline" icon={LogOut} className="w-full">
         تسجيل الخروج

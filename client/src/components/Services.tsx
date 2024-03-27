@@ -23,14 +23,29 @@ export default function Services() {
           </p>
         </div>
 
-        <div>
+        <div className="w-full">
           <Marquee
             // #5352518c
             // #e9e5df8c
             gradientColor="#ffedd58c"
             gradientWidth={100}
-            gradient={true}
-            className="w-full min-h-[30vh]">
+            // gradient={true}
+            className="w-full min-h-[20vh]">
+            <ServiceCard text="تعليم" />
+            <ServiceCard text="غذاء" />
+            <ServiceCard text="تطوع" />
+            <ServiceCard text="إستشارة" />
+            <ServiceCard text="صحة" />
+          </Marquee>
+
+          <Marquee
+            // #5352518c
+            // #e9e5df8c
+            direction="right"
+            gradientColor="#ffedd58c"
+            gradientWidth={100}
+            // gradient={true}
+            className="w-full min-h-[20vh]">
             <ServiceCard text="تعليم" />
             <ServiceCard text="غذاء" />
             <ServiceCard text="تطوع" />

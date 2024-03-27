@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import Hero from "./Hero";
 import Card from "./Card";
 import ZommParallax from "./ZommParallax";
-import TextCard from "./TextCard";
+import { Orgdashboard } from "./component/OrgDashboard";
 
 export {
   Content,
@@ -19,6 +19,7 @@ export {
   Hero,
   Card,
   ZommParallax,
-  TextCard,
+  Orgdashboard,
+  
 };
 

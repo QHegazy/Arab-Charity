@@ -16,7 +16,7 @@ export function Orgdashboard() {
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">مجموع الطلابات</CardTitle>
+              <CardTitle className="text-sm font-medium">مجموع الطلبات</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">20</div>
@@ -53,8 +53,8 @@ export function Orgdashboard() {
           <Card className="xl:col-span-2">
             <CardHeader className="flex flex-row items-center">
               <div className="grid gap-2">
-                <CardTitle>الطلابات</CardTitle>
-                <CardDescription>جميع الطلابات المعلنة</CardDescription>
+                <CardTitle>الطلبات</CardTitle>
+                <CardDescription>جميع الطلبات المعلنة</CardDescription>
               </div>
               <Button asChild className="mr-auto gap-1 text-sm" size="sm">
                 <Link className="text-sm" href="#">
@@ -175,25 +175,6 @@ export function Orgdashboard() {
 }
 
 
-function DollarSignIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" x2="12" y1="2" y2="22" />
-      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-    </svg>
-  )
-}
 
 
 function UsersIcon(props) {
@@ -218,26 +199,6 @@ function UsersIcon(props) {
   )
 }
 
-
-function CreditCardIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="14" x="2" y="5" rx="2" />
-      <line x1="2" x2="22" y1="10" y2="10" />
-    </svg>
-  )
-}
 
 
 function ActivityIcon(props) {

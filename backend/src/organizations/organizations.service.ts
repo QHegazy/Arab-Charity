@@ -21,7 +21,7 @@ export class OrganizationsService {
     );
     const CreateOrg = new this.OrgModel();
 
-    CreateOrg.Name = CreateOrg.Name;
+    CreateOrg.Name = CreateOrgDto.Name;
     CreateOrg.PhoneNumber = CreateOrgDto.PhoneNumber;
     CreateOrg.Country = CreateOrgDto.Country;
     CreateOrg.Email = CreateOrgDto.Email;

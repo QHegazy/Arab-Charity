@@ -1,11 +1,12 @@
 "use client";
 import * as z from "zod";
+import jwt from "jsonwebtoken"
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie"
-import { AxiosError } from 'axios';
 import {
   Form,
   FormControl,
@@ -54,50 +55,62 @@ export default function Home() {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
+    setIsLoading(true);
 
-    setIsLoading(true)
     try {
-
-      const response = await axios.post("http://localhost:3000/v1/auth/user/email", { ...values })
+      const response = await axios.post("http://localhost:3000/v1/auth" , { ...values });
 
       if (response.status === 200) {
-        console.log(response.headers)
-        console.log("login successful: ", response.data)
-        toast({
-          title: "Login successfuly ",
-          description: "welcome back",
-        })
-        router.push("/user")
+        const token = response.data.data;
+        Cookies.set("accessToken", token, { expires: 7 })
+        const decodedToken = await jwt.decode(token);
+        console.log(decodedToken)
+
+        if (decodedToken && typeof decodedToken === 'object' && 'Role' in decodedToken) {
+          console.log("login successful: ", decodedToken);
+          // Determine redirect based on role
+          if (decodedToken.Role === "Beneficiary" || decodedToken.Role === "doner") {
+            router.push("/user");
+          } else if (decodedToken.Role === "org") {
+            router.push("/org");
+          }
+          toast({
+            variant: "success",
+            title: "Login successfuly",
+            description: "Welcome back",
+          });
+        } else {
+          router.push("/")
+          console.error("Failed to decode token");
+        }
       } else {
-        console.log(response.data.message)
+        console.log(response.data.message);
         toast({
           variant: "destructive",
-          title: "login faild ",
-          description: "pleas try again",
-        })
+          title: "Login failed",
+          description: "Please try again",
+        });
       }
     } catch (error) {
       //@ts-ignore
       if (error.response) {
-        console.log(error)
+        console.log(error);
         toast({
           variant: "destructive",
           title: "تعذر تسجيل الدخول",
           description: "معلومات الدخول خاطئة",
-        })
+        });
       } else {
         toast({
           variant: "destructive",
-          title: "خطاء ",
-          description: "خطاء غير متوقع حاول مجددا لاحقا",
-        })
+          title: "خطأ",
+          description: "خطأ غير متوقع حاول مجددًا لاحقًا",
+        });
       }
-
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-
-  }
+  };
 
   return (
     <div className="bg-orange-100 bg-opacity-55">

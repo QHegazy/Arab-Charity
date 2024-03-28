@@ -91,12 +91,12 @@ export class AuthService {
       throw error;
     }
   }
-  private PayloadUser(user: User): PayloadUser {
-    const { FirstName, LastName, Role, Country, PhoneNumber } = user;
-    return { FirstName, LastName, Role, Country, PhoneNumber };
+  private PayloadUser(user: any): PayloadUser {
+    const { FirstName, LastName, Role, Country, PhoneNumber, _id } = user;
+    return { FirstName, LastName, Role, Country, PhoneNumber, _id };
   }
-  private PayloadOrg(org: Org): PayloadOrg {
-    const { Name, Role, Country, PhoneNumber, Location, Website } = org;
-    return { Name, Role, Country, PhoneNumber, Location, Website };
+  private PayloadOrg(org: any): PayloadOrg {
+    const { Name, Role, Country, PhoneNumber, Location, Website, _id } = org;
+    return { Name, Role, Country, PhoneNumber, Location, Website, _id };
   }
 }

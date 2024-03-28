@@ -129,8 +129,9 @@ export class OrganizationsService {
     return updateFields;
   }
   private Payload(updatedOrg: any): PayloadOrg {
-    const { Name, Role, Country, PhoneNumber, Location, Website } = updatedOrg;
-    return { Name, Role, Country, PhoneNumber, Location, Website };
+    const { Name, Role, Country, PhoneNumber, Location, Website, _id } =
+      updatedOrg;
+    return { Name, Role, Country, PhoneNumber, Location, Website, _id };
   }
 
   async addOrderToUser(id: string, orderId: string) {

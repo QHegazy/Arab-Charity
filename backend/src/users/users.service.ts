@@ -41,7 +41,7 @@ export class UsersService {
   async findUserByID(id: string): Promise<User> {
     return this.userModel
       .findById(id)
-      .select('-__v -CreatedAt -_id -Password')
+      .select('-__v -CreatedAt -Password')
       .exec();
   }
   async findUserByPhoneNumber(phoneNumber: number): Promise<User> {
@@ -133,8 +133,9 @@ export class UsersService {
     return updateFields;
   }
   private Payload(updatedUser: any): PayloadUser {
-    const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
-    return { FirstName, LastName, Role, Country, PhoneNumber };
+    const { FirstName, LastName, Role, Country, PhoneNumber, _id } =
+      updatedUser;
+    return { FirstName, LastName, Role, Country, PhoneNumber, _id };
   }
   async addOrderToUser(id: string, orderId: string) {
     const updatedUser = await this.userModel.findByIdAndUpdate(

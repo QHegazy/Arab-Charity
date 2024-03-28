@@ -28,8 +28,8 @@ export class OrganizationsService {
     CreateOrg.Role = CreateOrgDto.Role;
     CreateOrg.Location = CreateOrgDto.Location;
     CreateOrg.Website = CreateOrgDto.Website;
-    CreateOrg.DateOfEstablishmentOfInstitution =
-      CreateOrgDto.DateOfEstablishmentOfInstitution;
+    // CreateOrg.DateOfEstablishmentOfInstitution =
+    //   CreateOrgDto.DateOfEstablishmentOfInstitution;
 
     CreateOrg.Password = password;
 
@@ -116,8 +116,8 @@ export class OrganizationsService {
       Name: UpdateOrg.Name,
       PhoneNumber: UpdateOrg.PhoneNumber,
       Role: UpdateOrg.Role,
-      DateOfEstablishmentOfInstitution:
-        UpdateOrg.DateOfEstablishmentOfInstitution,
+      // DateOfEstablishmentOfInstitution:
+      //   UpdateOrg.DateOfEstablishmentOfInstitution,
     };
 
     if (UpdateOrg.Password) {

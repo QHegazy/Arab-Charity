@@ -34,7 +34,7 @@ export class UsersService {
   async findUserByEmail(email: string): Promise<User> {
     return this.userModel
       .findOne({ Email: email })
-      .select('-__v -CreatedAt -_id -Password')
+      .select('-__v -CreatedAt  -Password')
       .exec();
   }
   async findUserByID(id: string): Promise<User> {
@@ -134,4 +134,6 @@ export class UsersService {
     const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
     return { FirstName, LastName, Role, Country, PhoneNumber };
   }
+
+  
 }

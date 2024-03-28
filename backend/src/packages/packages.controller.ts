@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PackagesService } from './packages.service';
-import { CreatePackageDto } from './dto/create-package.dto';
-import { UpdatePackageDto } from './dto/update-package.dto';
+import { CreatePackageDto } from '../Dto/package/create-package.dto';
+import { UpdatePackageDto } from '../Dto/package/update-package.dto';
 
-@Controller('packages')
+@Controller({ version: '1', path: 'packages' })
 export class PackagesController {
   constructor(private readonly packagesService: PackagesService) {}
 

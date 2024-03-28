@@ -2,11 +2,10 @@ import {
   // IsDateString,
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUrl,
   Matches,
-  MaxLength,
-  MinLength,
 } from 'class-validator';
 import { Signup } from '../shared-Dto/org-user.dto';
 // import { IsDateInRange } from 'shared/functions/data.range';
@@ -16,8 +15,6 @@ const customEmailRegex = new RegExp(
 export class CreateOrgDto extends Signup {
   @IsNotEmpty()
   @IsString()
-  @MinLength(3)
-  @MaxLength(50)
   Name: string;
 
   @IsNotEmpty()
@@ -36,6 +33,9 @@ export class CreateOrgDto extends Signup {
   @IsString()
   Website: string;
 
+  @IsString()
+  @IsOptional()
+  orders: string;
   // @IsDateString()
   // @IsNotEmpty()
   // @IsDateInRange(1960, 2024, {

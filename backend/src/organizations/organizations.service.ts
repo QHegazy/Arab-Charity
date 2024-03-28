@@ -21,7 +21,7 @@ export class OrganizationsService {
     );
     const CreateOrg = new this.OrgModel();
 
-    CreateOrg.Name = CreateOrg.Name;
+    CreateOrg.Name = CreateOrgDto.Name;
     CreateOrg.PhoneNumber = CreateOrgDto.PhoneNumber;
     CreateOrg.Country = CreateOrgDto.Country;
     CreateOrg.Email = CreateOrgDto.Email;
@@ -30,14 +30,14 @@ export class OrganizationsService {
     CreateOrg.Website = CreateOrgDto.Website;
     // CreateOrg.DateOfEstablishmentOfInstitution =
     //   CreateOrgDto.DateOfEstablishmentOfInstitution;
-
     CreateOrg.Password = password;
+    CreateOrg.orders = CreateOrgDto.orders as any;
 
     return CreateOrg.save();
   }
   async findOrgByEmail(email: string): Promise<Org> {
     return this.OrgModel.findOne({ Email: email })
-      .select('-__v -CreatedAt -_id -Password')
+      .select('-__v -CreatedAt -Password')
       .exec();
   }
   async findOrgByID(id: string): Promise<Org> {
@@ -128,8 +128,19 @@ export class OrganizationsService {
     }
     return updateFields;
   }
-  private Payload(updatedOrg: UpdateOrgDto): PayloadOrg {
+  private Payload(updatedOrg: any): PayloadOrg {
     const { Name, Role, Country, PhoneNumber, Location, Website } = updatedOrg;
     return { Name, Role, Country, PhoneNumber, Location, Website };
+  }
+
+  async addOrderToUser(id: string, orderId: string) {
+    const updatedUser = await this.OrgModel.findByIdAndUpdate(
+      id,
+      { $push: { Orders: orderId } },
+      { new: true },
+    );
+    const payload = this.Payload(updatedUser);
+    const updatedToken = this.refreshToken(payload);
+    return updatedToken;
   }
 }

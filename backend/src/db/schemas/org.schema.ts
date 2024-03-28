@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { SignupSchema } from './Common/signup';
+import { Order, OrderSchema } from './order.schema';
 export type OrgDocument = HydratedDocument<Org>;
 
 @Schema()
@@ -22,6 +23,8 @@ export class Org extends SignupSchema {
   @Prop({ type: String, required: true })
   Website: string;
 
+  @Prop({ type: [OrderSchema] })
+  orders: Order[];
   // @Prop({ type: Date, required: true })
   // DateOfEstablishmentOfInstitution: Date;
 }

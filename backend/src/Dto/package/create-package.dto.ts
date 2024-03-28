@@ -1,14 +1,16 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { Commodity } from '../../../types/package.interface';
 
 export class CreatePackageDto implements Commodity {
-  title: string;
-  description: string;
-  @IsString()
   @IsNotEmpty()
-  Commodity: string;
+  @IsString()
+  Commodity: Commodity;
 
   @IsNotEmpty()
-  @IsNumber()
-  Mount: number;
+  @IsString()
+  Title: string;
+
+  @IsNotEmpty()
+  @IsString()
+  Description: string;
 }

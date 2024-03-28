@@ -1,17 +1,10 @@
 export interface BaseCommodity {
-  title: string;
-  description: string;
-}
-
-export interface CommonValues {
-  CreatedAt: Date;
-  UpdatedAt: Date;
-  DeletedAt: Date;
-  Verified: boolean;
+  Title: string;
+  Description: string;
 }
 
 export interface Commodity extends BaseCommodity {
-  Commodity: string;
+  Commodity: Commodity;
 }
 export interface Food extends BaseCommodity {
   Food: string;

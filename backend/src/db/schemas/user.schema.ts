@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { SignupSchema } from './Common/signup';
+import { Order, OrderSchema } from './order.schema';
 export type UserDocument = HydratedDocument<User>;
 
 @Schema({
@@ -22,6 +23,9 @@ export class User extends SignupSchema {
 
   @Prop({ type: Date, required: true })
   BirthDate: Date;
+
+  @Prop({ type: [OrderSchema] })
+  orders: Order[];
 
   @Prop({ type: Date, default: Date.now })
   CreatedAt: Date;

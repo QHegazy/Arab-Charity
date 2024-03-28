@@ -14,6 +14,10 @@ import { AuthGuard } from 'src/guard/auth-guard/auth-guard.guard';
 import { Response } from 'express';
 import { ResponseObject } from 'src/messages/message';
 
+const customEmailRegex = new RegExp(
+  '^[a-zA-Z0-9._%+-]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)(?!yahoo.co.in)(?!aol.com)(?!live.com)(?!outlook.com)[a-zA-Z0-9_-]+.[a-zA-Z0-9-.]{2,61}$',
+);
+
 @Controller({ version: '1', path: 'auth' })
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -25,7 +29,13 @@ export class AuthController {
     @Body() form: signInEmail,
   ): Promise<void | ResponseObject<string>> {
     try {
-      const authToken = await this.authService.signInByEmailForUser(form);
+      let authToken;
+      if (customEmailRegex.test(form.Email)) {
+        authToken = await this.authService.signInByEmailForOrg(form);
+      } else {
+        authToken = await this.authService.signInByEmailForUser(form);
+      }
+
       res.cookie('access_token', authToken, {
         httpOnly: true,
         secure: true,

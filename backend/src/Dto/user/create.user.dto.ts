@@ -5,6 +5,8 @@ import {
   MinLength,
   MaxLength,
   IsDateString,
+  IsOptional,
+  IsArray,
 } from 'class-validator';
 import { IsDateInRange } from 'shared/functions/data.range';
 import { Signup } from '../shared-Dto/org-user.dto';
@@ -32,4 +34,8 @@ export class CreateUserDto extends Signup {
     message: 'The birthDate must be between 1980 and 2021.',
   })
   BirthDate: Date;
+  @IsOptional()
+  @IsString({ each: true })
+  @IsArray()
+  orders?: string;
 }

@@ -13,4 +13,12 @@ export class CreatePackageDto implements Commodity {
   @IsNotEmpty()
   @IsString()
   Description: string;
+
+  @IsNotEmpty()
+  @IsString()
+  Owner: string;
+
+  @IsNotEmpty()
+  @IsString()
+  Order: string;
 }

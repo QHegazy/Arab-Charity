@@ -22,8 +22,8 @@ export class Org extends SignupSchema {
   @Prop({ type: String, required: true })
   Website: string;
 
-  @Prop({ type: Date, required: true })
-  DateOfEstablishmentOfInstitution: Date;
+  // @Prop({ type: Date, required: true })
+  // DateOfEstablishmentOfInstitution: Date;
 }
 
 export const OrgSchema = SchemaFactory.createForClass(Org);

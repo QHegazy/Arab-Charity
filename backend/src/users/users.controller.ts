@@ -215,4 +215,17 @@ export class UsersController {
       throw error;
     }
   }
+
+  @Post(':id/orders/:orderId')
+  async addOrderToUser(
+    @Param('id') id: string,
+    @Param('orderId') orderId: string,
+  ) {
+    try {
+      const updatedToken = await this.usersService.addOrderToUser(id, orderId);
+      return { updatedToken };
+    } catch (error) {
+      throw new Error(`Error adding order to user: ${error.message}`);
+    }
+  }
 }

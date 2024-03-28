@@ -28,13 +28,14 @@ export class UsersService {
     createdUser.Email = createUserDto.Email;
     createdUser.Role = createUserDto.Role;
     createdUser.Password = password;
+    createdUser.orders = createUserDto.orders as any;
 
     return createdUser.save();
   }
   async findUserByEmail(email: string): Promise<User> {
     return this.userModel
       .findOne({ Email: email })
-      .select('-__v -CreatedAt -_id -Password')
+      .select('-__v -CreatedAt  -Password')
       .exec();
   }
   async findUserByID(id: string): Promise<User> {
@@ -120,6 +121,7 @@ export class UsersService {
       PhoneNumber: UpdateUser.PhoneNumber,
       Role: UpdateUser.Role,
       BirthDate: UpdateUser.BirthDate,
+      orders: UpdateUser.orders,
     };
 
     if (UpdateUser.Password) {
@@ -130,8 +132,18 @@ export class UsersService {
     }
     return updateFields;
   }
-  private Payload(updatedUser: UpdateUserDto): PayloadUser {
+  private Payload(updatedUser: any): PayloadUser {
     const { FirstName, LastName, Role, Country, PhoneNumber } = updatedUser;
     return { FirstName, LastName, Role, Country, PhoneNumber };
+  }
+  async addOrderToUser(id: string, orderId: string) {
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
+      { $push: { Orders: orderId } },
+      { new: true },
+    );
+    const payload = this.Payload(updatedUser);
+    const updatedToken = this.refreshToken(payload);
+    return updatedToken;
   }
 }

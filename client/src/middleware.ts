@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL("/user", request.nextUrl))
   // }
 
-  // if (tokenData.Role === "org" && !orgPath) {
+  // if ((tokenData.Role !== "Beneficiary" || tokenData.Role !== "donor")  && !orgPath) {
   //   return NextResponse.redirect(new URL("/org", request.nextUrl))
   // }
 

@@ -221,6 +221,24 @@ export default function Home() {
                         );
                       }} />
 
+                    <FormField
+                      control={form.control} name='Name'
+                      render={({ field }) => {
+                        return (
+                          <FormItem className='md:flex-1 w-full'>
+                            <FormLabel>أسم المنظمة</FormLabel>
+                            <FormControl>
+                              <Input
+                                className='rounded-full w-full '
+                                placeholder='الأسم الأول'
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }} />
+
                     {/* email */}
                     <FormField
                       control={form.control} name='Email'

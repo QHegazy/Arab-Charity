@@ -18,12 +18,12 @@ import { ResponseObject } from 'src/messages/message';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('user/email')
+  @Post('')
   @HttpCode(200)
   async authUserByEmail(
     @Res({ passthrough: true }) res: Response,
     @Body() form: signInEmail,
-  ): Promise<ResponseObject<void>> {
+  ): Promise<void | ResponseObject<string>> {
     try {
       const authToken = await this.authService.signInByEmailForUser(form);
       res.cookie('access_token', authToken, {
@@ -32,7 +32,12 @@ export class AuthController {
         sameSite: 'lax',
         expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
       });
-      return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
+      return new ResponseObject(
+        'success',
+        200,
+        'Cookie added ssuccessfully ',
+        authToken,
+      );
     } catch (error) {
       throw error;
     }
@@ -56,25 +61,7 @@ export class AuthController {
       throw error;
     }
   }
-  @Post('org/email')
-  @HttpCode(200)
-  async authOrgByEmail(
-    @Res({ passthrough: true }) res: Response,
-    @Body() form: signInEmail,
-  ): Promise<ResponseObject<void>> {
-    try {
-      const authToken = await this.authService.signInByEmailForOrg(form);
-      res.cookie('access_token', authToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
-      });
-      return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
-    } catch (error) {
-      throw error;
-    }
-  }
+
   @Post('Org/phone')
   @HttpCode(200)
   async authUserByOrgNumber(
@@ -111,3 +98,42 @@ export class AuthController {
     return new ResponseObject('success', 200, 'Cookie ssuccessfully cleared');
   }
 }
+
+// @Post('org/email')
+// @HttpCode(200)
+// async authOrgByEmail(
+//   @Res({ passthrough: true }) res: Response,
+//   @Body() form: signInEmail,
+// ): Promise<ResponseObject<void>> {
+//   try {
+//     const authToken = await this.authService.signInByEmailForOrg(form);
+//     res.cookie('access_token', authToken, {
+//       httpOnly: true,
+//       secure: true,
+//       sameSite: 'lax',
+//       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+//     });
+//     return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+// @Post('user/email')
+// @HttpCode(200)
+// async authUserByEmail(
+//   @Res({ passthrough: true }) res: Response,
+//   @Body() form: signInEmail,
+// ): Promise<ResponseObject<void>> {
+//   try {
+//     const authToken = await this.authService.signInByEmailForUser(form);
+//     res.cookie('access_token', authToken, {
+//       httpOnly: true,
+//       secure: true,
+//       sameSite: 'lax',
+//       expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+//     });
+//     return new ResponseObject('success', 200, 'Cookie added ssuccessfully ');
+//   } catch (error) {
+//     throw error;
+//   }
+// }

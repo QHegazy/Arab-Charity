@@ -18,13 +18,19 @@ export class Package implements Commodity {
   Description: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  Owner: User;
+  User: User;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Org' })
+  Org: any;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Order' })
   Order: Order;
 
   @Prop({ type: Date, default: Date.now })
   CreatedAt: Date;
+
+  @Prop({ type: Boolean, default: false })
+  Verified: boolean;
 }
 
 export const PackageSchema = SchemaFactory.createForClass(Package);

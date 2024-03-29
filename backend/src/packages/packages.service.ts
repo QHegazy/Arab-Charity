@@ -34,4 +34,30 @@ export class PackagesService {
   remove(id: string) {
     return this.packageModel.findByIdAndDelete(id);
   }
+  async verified() {
+    try {
+      const orders = await this.packageModel.find();
+      for (let i = 0; i < orders.length; i++) {
+        const order = orders[i];
+        if (!order.Verified) {
+          order.Verified = true;
+          await order.save();
+        }
+      }
+      return orders;
+    } catch (error) {
+      throw new Error(`Error while fetching verified orders: ${error.message}`);
+    }
+  }
+  async runVerifiedAfterDelay() {
+    setTimeout(async () => {
+      try {
+        const verifiedOrders = await this.verified();
+        console.log('Verified orders:', verifiedOrders);
+        // Handle the verified orders as needed
+      } catch (error) {
+        console.error(`Error while fetching verified orders: ${error.message}`);
+      }
+    }, 60000); // 1 minute = 60,000 milliseconds
+  }
 }

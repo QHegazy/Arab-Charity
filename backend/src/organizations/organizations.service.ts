@@ -31,7 +31,7 @@ export class OrganizationsService {
     // CreateOrg.DateOfEstablishmentOfInstitution =
     //   CreateOrgDto.DateOfEstablishmentOfInstitution;
     CreateOrg.Password = password;
-    CreateOrg.orders = CreateOrgDto.orders as any;
+    CreateOrg.Orders = CreateOrgDto.orders as any;
 
     return CreateOrg.save();
   }

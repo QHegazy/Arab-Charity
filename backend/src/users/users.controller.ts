@@ -228,4 +228,9 @@ export class UsersController {
       throw new Error(`Error adding order to user: ${error.message}`);
     }
   }
+
+  @Get(':id/orders')
+  async allOrder(@Param('id') id: string) {
+    return await this.usersService.allOrder(id);
+  }
 }

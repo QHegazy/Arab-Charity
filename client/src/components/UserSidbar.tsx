@@ -8,9 +8,10 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
-
+import Cookies from "js-cookie";
 const userData = getDataFromToken()
 console.log(userData)
+
 
 const BeneficiarySidebarItem: SidebarItems = {
   links: [{
@@ -45,10 +46,6 @@ const BeneficiarySidebarItem: SidebarItems = {
   ],
   extra: (
     <div className="flex flex-col gap-3">
-
-      <SidbarButton variant="outline" icon={LogOut} className="w-full">
-        تسجيل الخروج
-      </SidbarButton>
     </div>
   )
 
@@ -93,10 +90,6 @@ const DonorSidebarItems: SidebarItems = {
   ],
   extra: (
     <div className="flex flex-col gap-3">
-
-      <SidbarButton variant="outline" icon={LogOut} className="w-full">
-        تسجيل الخروج
-      </SidbarButton>
     </div>
   )
 }
@@ -138,7 +131,7 @@ export function Sidbar() {
               </svg>
             </div>
             <ul className="flex flex-col items-center justify-between min-h-[250px] w-full gap-5 p-4 text-xl font-bold text-blue-950">
-              {userData.Role === "doner" ? ( // Modified conditional check
+              {userData && userData.Role === "doner" ? ( // Modified conditional check
                 DonorSidebarItems.links?.map((link, index) => (
                   <Link key={index}
                     className="w-full text-right"
@@ -177,6 +170,7 @@ export function Sidbar() {
 
                 ))
               )}
+
               <Button asChild className="w-full">
                 <Link href="/login">تسجيل</Link>
               </Button>
@@ -219,7 +213,11 @@ export function Sidbar() {
       }
     `}</style>
       <div className="hidden md:block">
-        <SidebarDesktop sidebarItems={userData.Role === "doner" ? DonorSidebarItems : BeneficiarySidebarItem} />
+        {userData && userData.Role === "doner" ? (
+          <SidebarDesktop sidebarItems={DonorSidebarItems} />
+        ) : (
+          <SidebarDesktop sidebarItems={BeneficiarySidebarItem} />
+        )}
       </div>
 
     </div>

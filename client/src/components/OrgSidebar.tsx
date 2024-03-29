@@ -1,5 +1,5 @@
 'use client'
-import { Home, LogOut, MoreHorizontal, HeartHandshake, LayoutList, BringToFront, Bot, BookHeart } from "lucide-react";
+import { Home, LogOut, MoreHorizontal, HeartHandshake, LayoutList, BringToFront, Bot, BookHeart, Route } from "lucide-react";
 import { SidebarDesktop } from "./SidebarDesktop";
 import { SidebarItems } from "@/types/sidebar";
 import { SidbarButton } from "./SidebarButton";
@@ -7,6 +7,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
+import Cookies from "js-cookie";
+import {useRouter } from "next/router";
+
 
 const sidebarItems: SidebarItems = {
   links: [{
@@ -48,13 +51,11 @@ const sidebarItems: SidebarItems = {
   ],
   extra: (
     <div className="flex flex-col gap-3">
-
-      <SidbarButton variant="outline" icon={LogOut} className="w-full">
-        تسجيل الخروج
-      </SidbarButton>
     </div>
   )
 }
+
+
 
 export function Sidbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);

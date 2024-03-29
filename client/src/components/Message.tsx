@@ -1,6 +1,6 @@
 export default function Messag() {
   return (
-    <section className="message bg-white">
+    <section className="message bg-white" id="about">
       <div className="container flex gap-5 items-center justify-between flex-col lg:flex-row py-11 my-11">
         <div className="lg:flex-1 text-center lg:text-right">
           <div className="text-3xl text-orange-400 font-bold">ماذا نقدم</div>

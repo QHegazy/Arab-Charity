@@ -1,0 +1,6 @@
+end point for the api
+
+to create user = http://localhost:3000/v1/users
+to create org = http://localhost:3000/v1/orgs
+to login in user = http://localhost:3000/v1/auth/user/email
+to org in user = http://localhost:3000/v1/auth/org/email

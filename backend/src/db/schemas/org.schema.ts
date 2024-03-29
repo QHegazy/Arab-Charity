@@ -24,7 +24,14 @@ export class Org extends SignupSchema {
   Website: string;
 
   @Prop({ type: [OrderSchema] })
+
   Orders: Order[];
+
+
+  @Prop({ type: String, required: true })
+  OrgRole: string;
+
+
   // @Prop({ type: Date, required: true })
   // DateOfEstablishmentOfInstitution: Date;
 }

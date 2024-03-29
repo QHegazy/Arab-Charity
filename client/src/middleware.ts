@@ -1,39 +1,40 @@
 
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-
-
+import { NextRequest } from 'next/server'
+import jwt from "jsonwebtoken"
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
 
   const path = request.nextUrl.pathname
-  const isPublicPath = path == '/signin' || path == '/signup' || path == '/' || path == '/login' || path.startsWith('/user');
-  
-  const token = request.cookies.get('token')?.value || '';
-  if (!token && !isPublicPath) {
-    return NextResponse.redirect(new URL("/login", request.nextUrl));
-  }
-
-  //  #TODO check if token is valid then dircet the user to the user page
-  // #TODO chek if it is an org or user then redirect to the right page
-  if (token && isPublicPath) {
-    return NextResponse.redirect(new URL("/user", request.nextUrl));
-  }
-
-  // check the user type 
-
-  // if (path === 'verifyemail' && !token) {
-  //   return NextResponse.redirect(new URL('/', request.nextUrl))
+  const isPublicPath = path == '/signin' || path == '/signup' || path == '/' || path == '/login';
+  const orgPath = path.startsWith("/org")
+  const userPath = path.startsWith("/user")
+  const token = request.cookies.get('accessToken')?.value || '';
+  const tokenData = jwt.decode(token)
+  // console.log(tokenData)
+  // handle if user is not login and tray to access
+  // if (!token && !isPublicPath) {
+  //   return NextResponse.redirect(new URL("/login", request.nextUrl));
   // }
 
-  // if (isPublicPath && token) {
-  //   return NextResponse.redirect(new URL('/', request.nextUrl))
+  // if ((tokenData.Role === "Beneficiary" || tokenData.Role === "donor") && !userPath) {
+  //   return NextResponse.redirect(new URL("/user", request.nextUrl))
   // }
 
-  // if (!isPublicPath && !token) {
-  //   return NextResponse.redirect(new URL('/login', request.nextUrl))
+  // if (tokenData.Role === "org" && !orgPath) {
+  //   return NextResponse.redirect(new URL("/org", request.nextUrl))
   // }
 
+  // console.log(userPath)
+
+  // // handle if user is login and try to access public route 
+  // if (token && isPublicPath) {
+  //   if (tokenData.Role === "Beneficiary" || tokenData.Role === "donor") {
+  //     return NextResponse.redirect(new URL('/user', request.nextUrl))
+  //   } else {
+  //     return NextResponse.redirect(new URL('/org', request.nextUrl))
+  //   }
+  // }
 
 }
 
@@ -41,6 +42,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
+    '/org/:path*',
     '/user/:path*',
     '/login',
     '/signup',

@@ -1,28 +1,39 @@
 /** @format */
 
 import React from "react";
-import { LucideIcon } from "lucide-react";
+import { BadgeDollarSign, Book, Home, LucideIcon, Scale, TicketCheck, Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type CardProps = {
-  label: string;
-  icon: LucideIcon;
-  amount: string;
-  discription: string;
+  Title?: string;
+  icon?: LucideIcon;
+  amount?: string;
+  Description?: string;
+  Commodity?:string;
+};
+
+const commodityIcons = {
+  Food: <Utensils />,
+  RealEstate: <Home />,
+  Ticket: <TicketCheck />,
+  FinancialAid: <BadgeDollarSign />,
+  Course: <Book />,
+  LegalSupport:<Scale />,
 };
 
 export default function Card(props: CardProps) {
   return (
-    <CardContent>
+    <CardContent className="rounded-3xl">
       <section className="flex justify-between gap-2">
-        {/* label */}
-        <p className="text-sm text-blue-950">{props.label}</p>
+        {/* title */}
+        <p className="text-sm text-blue-950">{props.Title}</p>
         {/* icon */}
-        <props.icon className="h-4 w-4 text-blue-950" />
+        {commodityIcons[props.Commodity]}
+        {/* <props.icon className="h-4 w-4 text-blue-950" /> */}
       </section>
       <section className="flex flex-col gap-1">
         <h2 className="text-xl font-semibold text-blue-950">{props.amount}</h2>
-        <p className="text-xs text-blue-900">{props.discription}</p>
+        <p className="text-xs text-blue-900">{props.Description}</p>
       </section>
     </CardContent>
   );

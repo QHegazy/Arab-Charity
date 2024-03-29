@@ -6,6 +6,8 @@ import Services from "./Services";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import Card from "./Card";
+import ZommParallax from "./ZommParallax";
+import { Orgdashboard } from "./component/OrgDashboard";
 
 export {
   Content,
@@ -16,5 +18,8 @@ export {
   Footer,
   Hero,
   Card,
+  ZommParallax,
+  Orgdashboard,
+  
 };
 

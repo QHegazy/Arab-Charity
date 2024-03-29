@@ -96,7 +96,7 @@ export class AuthService {
     return { FirstName, LastName, Role, Country, PhoneNumber, _id };
   }
   private PayloadOrg(org: any): PayloadOrg {
-    const { Name, Role, Country, PhoneNumber, Location, Website, _id } = org;
-    return { Name, Role, Country, PhoneNumber, Location, Website, _id };
+    const { Name, Role, Country, PhoneNumber, Location, Website, _id, OrgRole } = org;
+    return { Name, Role, OrgRole, Country, PhoneNumber, Location, Website, _id };
   }
 }

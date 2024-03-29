@@ -1,4 +1,6 @@
 import { Sidbar } from "@/components/OrgSidebar";
+import { Cairo } from "next/font/google"
+const cario = Cairo({ subsets: ["arabic", "latin"] })
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -6,8 +8,8 @@ export default function RootLayout({
 }>) {
 
   return (
-    <div className="bg-orange-50 bg-opacity-20 min-h-screen">
-      <div className="hidden md:block">
+    <div className={`bg-orange-50 bg-opacity-20 min-h-screen ${cario.className}`}>
+      <div >
         <Sidbar />
       </div>
       <main className="lg:mr-[280px] md:mr-[90px]">

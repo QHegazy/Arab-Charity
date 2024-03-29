@@ -1,5 +1,7 @@
 "use client";
 import * as z from "zod";
+import jwt from "jsonwebtoken"
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -19,10 +21,11 @@ import { useToast } from "@/components/ui/use-toast"
 
 import Link from "next/link";
 import Header from "@/components/Header";
+import { useState } from "react";
 const formSchema = z
   .object({
-    email: z.string().email(),
-    password: z.string().min(8),
+    Email: z.string().email(),
+    Password: z.string().min(8),
 
   })
 // .refine(
@@ -40,47 +43,74 @@ export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      Email: "",
+      Password: "",
 
     },
   });
-
+  
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast()
 
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log({ values });
-    try {
-      const response = await axios.post("http://localhost:3001/v1/auth/email/login", { ...values })
-      if (response.status === 200) {
-        // successful login
-        toast({
-          title: "login successfuly ",
-          description: "welcome back",
-        })
+    setIsLoading(true);
 
-        router.push("/user")
+    try {
+      const response = await axios.post("http://localhost:3000/v1/auth" , { ...values });
+
+      if (response.status === 200) {
+        const token = response.data.data;
+        Cookies.set("accessToken", token, { expires: 7 })
+        const decodedToken = await jwt.decode(token);
+        console.log(decodedToken)
+
+        if (decodedToken && typeof decodedToken === 'object' && 'Role' in decodedToken) {
+          console.log("login successful: ", decodedToken);
+          // Determine redirect based on role
+          if (decodedToken.Role === "Beneficiary" || decodedToken.Role === "doner") {
+            router.push("/user");
+          } else if (decodedToken.Role === "org") {
+            router.push("/org");
+          }
+          toast({
+            variant: "success",
+            title: "Login successfuly",
+            description: "Welcome back",
+          });
+        } else {
+          router.push("/")
+          console.error("Failed to decode token");
+        }
+      } else {
+        console.log(response.data.message);
+        toast({
+          variant: "destructive",
+          title: "Login failed",
+          description: "Please try again",
+        });
+      }
+    } catch (error) {
+      //@ts-ignore
+      if (error.response) {
+        console.log(error);
+        toast({
+          variant: "destructive",
+          title: "تعذر تسجيل الدخول",
+          description: "معلومات الدخول خاطئة",
+        });
       } else {
         toast({
           variant: "destructive",
-          title: "Singup fail ",
-          description: response.data.message,
-        })
-
-        console.log("login failed ", response.data)
+          title: "خطأ",
+          description: "خطأ غير متوقع حاول مجددًا لاحقًا",
+        });
       }
-
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Singup fail ",
-        description: `${error}`,
-      })
-      console.log(error)
+    } finally {
+      setIsLoading(false);
     }
-
   };
 
   return (
@@ -99,7 +129,7 @@ export default function Home() {
                 {/* email */}
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="Email"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -121,7 +151,7 @@ export default function Home() {
                 {/* password */}
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="Password"
                   render={({ field }) => {
                     return (
                       <FormItem>

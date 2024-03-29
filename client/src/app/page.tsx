@@ -6,6 +6,7 @@ import {
   Content,
   Services,
   Hero,
+  ZommParallax,
 
 } from "@/components";
 
@@ -14,6 +15,7 @@ export default function Home() {
     <main className="bg-orange-100 bg-opacity-55 text-blue-950">
       <Header />
       <Hero />
+      <ZommParallax />
       <Services />
       <Content />
       <Messag />

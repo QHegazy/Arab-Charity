@@ -90,8 +90,7 @@ export default function Home() {
   const [message, setMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const mapToForm = (data: z.infer<typeof formSchema>) => ({
-    ...data,
-    role: data.OrgRole, // Map orgRole to Role
+    ...data, // Map orgRole to Role
     PhoneNumber: +data.PhoneNumber,
   });
 
@@ -203,24 +202,6 @@ export default function Home() {
                 {Role === "org" ? (
                   <div>
                     {/* org name */}
-                    <FormField
-                      control={form.control} name='Name'
-                      render={({ field }) => {
-                        return (
-                          <FormItem className='md:flex-1 w-full'>
-                            <FormLabel>أسم المنظمة</FormLabel>
-                            <FormControl>
-                              <Input
-                                className='rounded-full w-full '
-                                placeholder='الأسم الأول'
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        );
-                      }} />
-
                     <FormField
                       control={form.control} name='Name'
                       render={({ field }) => {

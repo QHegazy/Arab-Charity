@@ -36,6 +36,10 @@ export class CreateOrgDto extends Signup {
   @IsString()
   @IsOptional()
   orders: string;
+
+  @IsNotEmpty()
+  @IsString()
+  OrgRole: string;
   // @IsDateString()
   // @IsNotEmpty()
   // @IsDateInRange(1960, 2024, {

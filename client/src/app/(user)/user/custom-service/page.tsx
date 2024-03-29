@@ -12,7 +12,7 @@ export default function Home() {
     <div className=" w-full min-h-screen p-6 container ">
       <PageTitle title="اطلب خدمة خاصة" />
 
-      <div className="w-full md:w-[500px] m-auto p-3 shadow-2xl border  rounded-2xl mt-6">
+      <div className="w-full  m-auto p-3 shadow-2xl border  rounded-2xl mt-6">
         <form action="">
           <Select>
             <SelectTrigger className="rounded-full text-right">

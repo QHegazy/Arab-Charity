@@ -9,10 +9,10 @@ import {
 import { Button } from "@/components/ui/button";
 export default function Home() {
   return (
-    <div className=" w-full min-h-screen p-6 ">
+    <div className=" w-full min-h-screen p-6 container ">
       <PageTitle title="اطلب خدمة خاصة" />
 
-      <div className="w-full md:w-[500px] m-auto p-3 bg-orange-100 rounded-2xl mt-6">
+      <div className="w-full  m-auto p-3 shadow-2xl border  rounded-2xl mt-6">
         <form action="">
           <Select>
             <SelectTrigger className="rounded-full text-right">
@@ -37,8 +37,9 @@ export default function Home() {
             </SelectContent>
           </Select>
 
-
-          <textarea className=" outline-none w-full rounded-2xl mt-3 resize-none min-h-52 p-6" />
+          <p className="mt-3">الوصف</p>
+          <textarea placeholder="اكتب وصف الخدمة "
+            className=" outline-none w-full border border-orange-100 rounded-2xl mt-1 resize-none min-h-52 p-6" />
 
           <Button className="w-full mt-3" type="submit">
             اطلب

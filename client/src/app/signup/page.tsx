@@ -3,6 +3,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast"
+import { Icon } from '@iconify-icon/react';
 import {
   Form,
   FormControl,
@@ -21,7 +22,7 @@ import {
   Select,
 } from "@/components/ui/select";
 
-import { arabCountries } from "@/constants/arabCountries";
+import { countries } from "@/constants/countries";
 
 import {
   Popover,
@@ -89,8 +90,8 @@ export default function Home() {
   const [message, setMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const mapToForm = (data: z.infer<typeof formSchema>) => ({
-    ...data,
-    role: data.OrgRole // Map orgRole to Role
+    ...data, // Map orgRole to Role
+    PhoneNumber: +data.PhoneNumber,
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -99,13 +100,15 @@ export default function Home() {
     // TODO handle org request and button loading
     setMessage("loading")
     try {
-      const mappedData = mapToForm({ ...values });
+
+      const mappedData = mapToForm({ ...values })
       const endpoint = values.Role === "org" ? "/v1/orgs" : "/v1/users"
 
       const response = await axios.post("http://localhost:3000" + endpoint, mappedData)
       console.log(response.status)
-      if (response.status === 200) {
+      if (response.data.statusCode === 200) {
         toast({
+          variant: "success",
           title: "Singup successfuly ",
           description: "pleas login",
         })
@@ -118,21 +121,23 @@ export default function Home() {
           title: "Singup fail ",
           description: response.data.message,
         })
-        console.log('Signup failed:', response.data);
+        console.log(response.data);
       }
 
     } catch (error) {
       //@ts-ignore
 
       if (error.response) {
-        console.log(error)
+        //@ts-ignore
+        console.log(error.response.data.message)
         toast({
           variant: "destructive",
-          title: "تعذر تسجيل الدخول",
-          description: "معلومات الدخول خاطئة",
+          title: "تعذر إنشاء حساب جديد",
+          //@ts-ignore
+          description: `${error.response.data.message}`,
         })
         //@ts-ignore
-        console.log(...error.response.data.message);
+        // console.log(...error.response.data);
       } else {
         toast({
           variant: "destructive",
@@ -162,7 +167,6 @@ export default function Home() {
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="flex flex-col gap-1"
               >
-
                 {/* account type */}
                 <FormField
                   control={form.control}
@@ -237,23 +241,45 @@ export default function Home() {
                       }} />
                     {/* phone number */}
                     <FormField
-                      control={form.control} name='PhoneNumber'
-                      render={({ ...field }) => {
+                      control={form.control}
+                      name="PhoneNumber"
+                      render={({ field }) => {
                         return (
-                          <FormItem className='md:flex-1 w-full'>
+                          <FormItem>
                             <FormLabel>رقم الهاتف</FormLabel>
                             <FormControl>
                               <Input
-                                className='rounded-full w-full '
-                                placeholder='رقم الهاتف'
+                                className="rounded-full w-full"
+                                placeholder="رقم الهاتف"
                                 {...field}
                               />
                             </FormControl>
+                            <FormMessage className="text-red-400" />
+                          </FormItem>
+                        );
+                      }}
+                    />
+
+                    {/* website */}
+
+                    {/* org loaction */}
+                    <FormField
+                      control={form.control}
+                      name="Location"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>الموقع</FormLabel>
+                            <Input
+                              className='rounded-full w-full '
+                              placeholder='الموقع'
+                              {...field}
+                            />
                             <FormMessage />
                           </FormItem>
                         );
-                      }} />
-                    {/* website */}
+                      }}
+                    />
 
                     <FormField
                       control={form.control} name='Website'
@@ -287,11 +313,14 @@ export default function Home() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
-                                {arabCountries.map((name) => (
+                                {countries.map((country) => (
                                   <SelectItem
-                                    key={name}
+                                    key={country.name}
                                     className=" cursor-pointer hover:bg-white rounded-3xl"
-                                    value={name}>{name}</SelectItem>
+                                    value={country.name}>
+                                    {country.name}
+                                    <Icon icon={`flag:${country.code}-4x3`} />
+                                  </SelectItem>
                                 ))}
 
 
@@ -303,35 +332,6 @@ export default function Home() {
                       }}
                     />
 
-                    {/* org loaction */}
-                    <FormField
-                      control={form.control}
-                      name="Location"
-                      render={({ field }) => {
-                        return (
-                          <FormItem>
-                            <FormLabel>الموقع</FormLabel>
-                            <Select onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger className="rounded-full">
-                                  <SelectValue placeholder="اختر البلد" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
-                                {arabCountries.map((name) => (
-                                  <SelectItem
-                                    key={name}
-                                    className=" cursor-pointer hover:bg-white rounded-3xl"
-                                    value={name}>{name}</SelectItem>
-                                ))}
-
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        );
-                      }}
-                    />
 
                     {/* org type */}
                     <FormField
@@ -484,11 +484,18 @@ export default function Home() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent className="bg-orange-50 rounded-2xl text-2xl">
-                                  {arabCountries.map((name) => (
+                                  {countries.map((country) => (
                                     <SelectItem
-                                      key={name}
-                                      className=" cursor-pointer hover:bg-white rounded-3xl"
-                                      value={name}>{name}</SelectItem>
+                                      key={country.name}
+                                      className=" cursor-pointer hover:bg-white w-full gap-8 flex items-center justify-between rounded-3xl"
+                                      value={country.name}>
+                                      <span>
+                                        <Icon icon={`flag:${country.code}-4x3`} />
+                                      </span>
+                                      <span>
+                                        {country.name}
+                                      </span>
+                                    </SelectItem>
                                   ))}
 
                                 </SelectContent>

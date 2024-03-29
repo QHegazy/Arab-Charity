@@ -28,6 +28,7 @@ export class OrganizationsService {
     CreateOrg.Role = CreateOrgDto.Role;
     CreateOrg.Location = CreateOrgDto.Location;
     CreateOrg.Website = CreateOrgDto.Website;
+    CreateOrg.OrgRole = CreateOrgDto.OrgRole;
     // CreateOrg.DateOfEstablishmentOfInstitution =
     //   CreateOrgDto.DateOfEstablishmentOfInstitution;
     CreateOrg.Password = password;
@@ -129,9 +130,9 @@ export class OrganizationsService {
     return updateFields;
   }
   private Payload(updatedOrg: any): PayloadOrg {
-    const { Name, Role, Country, PhoneNumber, Location, Website, _id } =
+    const { Name, Role, Country, OrgRole, PhoneNumber, Location, Website, _id } =
       updatedOrg;
-    return { Name, Role, Country, PhoneNumber, Location, Website, _id };
+    return { Name, Role, Country, OrgRole, PhoneNumber, Location, Website, _id };
   }
 
   async addOrderToUser(id: string, orderId: string) {

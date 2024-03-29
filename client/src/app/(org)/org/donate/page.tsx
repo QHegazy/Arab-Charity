@@ -4,7 +4,7 @@ export default function Home() {
     <div className="p-6 w-full min-h-screen container">
       <PageTitle title="تطوع" />
       <div className="flex items-center text-xl min-h-[90vh] justify-center h-full">
-        ليس لدينا فرص للتطوع متاحة الان
+        تبرع
       </div>
     </div>
 

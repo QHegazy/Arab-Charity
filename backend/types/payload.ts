@@ -15,4 +15,5 @@ export interface PayloadOrg extends Payload {
   Name: string;
   Website: string;
   Location: string;
+  OrgRole: string;
 }

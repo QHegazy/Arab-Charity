@@ -7,6 +7,7 @@ import { CircleUserRound } from "lucide-react";
 import Card, { CardContent, CardProps } from "@/components/Card";
 import BarChart from "@/components/BarChart";
 import SalesCard, { SalesProps } from "@/components/SalesCard";
+import { Orgdashboard } from "@/components";
 
 const cardData: CardProps[] = [
   {
@@ -107,12 +108,12 @@ const uesrSalesData: SalesProps[] = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-5  w-full p-6">
+    <div className="flex flex-col gap-5 container w-full p-6">
       <div className="">
         <PageTitle title="الرئيسية" />
       </div>
 
-      <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4 ">
+      {/*  <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4 ">
         {cardData.map((d, i) => (
           <Card
             key={i}
@@ -154,8 +155,10 @@ export default function Home() {
           ))}
         </CardContent>
 
-        {/*  */}
-      </section>
+      
+      </section>*/}
+
+      <Orgdashboard />
     </div>
   );
 }

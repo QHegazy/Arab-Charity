@@ -1,5 +1,5 @@
 'use client'
-import { Home, LogOut, LayoutList, HandHelping, BringToFront, Bot, BookHeart } from "lucide-react";
+import { Home, LogOut, LayoutList, HandHelping, BringToFront, Bot, BookHeart, HeartHandshake } from "lucide-react";
 import { SidebarDesktop } from "./SidebarDesktop";
 import { SidebarItems } from "@/types/sidebar";
 import { SidbarButton } from "./SidebarButton";
@@ -7,13 +7,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 
-const sidebarItems: SidebarItems = {
+const userData = getDataFromToken()
+console.log(userData)
+
+const BeneficiarySidebarItem: SidebarItems = {
   links: [{
     label: "الرئيسية",
     href: "/user",
     icon: Home
   },
+
   {
     label: "تطوع",
     href: "/user/volunteer",
@@ -22,13 +27,13 @@ const sidebarItems: SidebarItems = {
 
   {
     label: "اطلب خدمة خاصة",
-    href: "/user/custom-order",
+    href: "/user/custom-service",
     icon: LayoutList
   },
 
   {
     label: "الخدمات المتوفرة",
-    href: "/user/orders",
+    href: "/user/services",
     icon: BringToFront
   },
   {
@@ -37,6 +42,53 @@ const sidebarItems: SidebarItems = {
     icon: Bot
   },
 
+  ],
+  extra: (
+    <div className="flex flex-col gap-3">
+
+      <SidbarButton variant="outline" icon={LogOut} className="w-full">
+        تسجيل الخروج
+      </SidbarButton>
+    </div>
+  )
+
+}
+
+const DonorSidebarItems: SidebarItems = {
+  links: [{
+    label: "الرئيسية",
+    href: "/user",
+    icon: Home
+  },
+  {
+    label: "تبرع",
+    href: "/user/donate",
+    icon: HeartHandshake
+  },
+  {
+    label: "نشر فرصة تطوع",
+    href: "/user/add-volunteer-opportunity",
+    icon: Home
+  },
+
+
+  {
+    label: "نشر خدمة",
+    href: "/user/add-service",
+    icon: BookHeart
+  },
+
+
+  {
+    label: "الطلبات",
+    href: "/user/orders",
+    icon: BringToFront
+  },
+  {
+    label: "تواصل مع AI",
+    href: "/user/ai-chat",
+    icon: Bot
+  },
 
   ],
   extra: (
@@ -86,8 +138,8 @@ export function Sidbar() {
               </svg>
             </div>
             <ul className="flex flex-col items-center justify-between min-h-[250px] w-full gap-5 p-4 text-xl font-bold text-blue-950">
-              {sidebarItems ? ( // Modified conditional check
-                sidebarItems.links?.map((link, index) => (
+              {userData.Role === "doner" ? ( // Modified conditional check
+                DonorSidebarItems.links?.map((link, index) => (
                   <Link key={index}
                     className="w-full text-right"
                     href={link.href} passHref>
@@ -106,7 +158,24 @@ export function Sidbar() {
 
                 ))
               ) : (
-                null
+                BeneficiarySidebarItem.links?.map((link, index) => (
+                  <Link key={index}
+                    className="w-full text-right"
+                    href={link.href} passHref>
+                    <Button
+                      onClick={() => setIsNavOpen((prev) => !prev)}
+                      className="w-full flex-start justify-start gap-2" variant={pathname == link.href ? "secondary" : "ghost"}
+                    >
+                      <div>
+                        {link.icon && <link.icon size={20} />}
+                      </div>
+                      <span className="inline-block">
+                        {link.label}
+                      </span>
+                    </Button>
+                  </Link>
+
+                ))
               )}
               <Button asChild className="w-full">
                 <Link href="/login">تسجيل</Link>
@@ -150,7 +219,7 @@ export function Sidbar() {
       }
     `}</style>
       <div className="hidden md:block">
-        <SidebarDesktop sidebarItems={sidebarItems} />
+        <SidebarDesktop sidebarItems={userData.Role === "doner" ? DonorSidebarItems : BeneficiarySidebarItem} />
       </div>
 
     </div>

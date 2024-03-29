@@ -41,6 +41,7 @@ export class UsersService {
   async findUserByID(id: string): Promise<User> {
     return this.userModel
       .findById(id)
+
       .select('-__v -CreatedAt -Password')
       .exec();
   }
@@ -146,5 +147,13 @@ export class UsersService {
     const payload = this.Payload(updatedUser);
     const updatedToken = this.refreshToken(payload);
     return updatedToken;
+  }
+  async allOrder(id: string) {
+    return await this.userModel
+      .findById(id)
+      .select(
+        '-__v  -UpdatedAt -DeletedAt -LastName -FirstName  -CreatedAt -Password -PhoneNumber -Country -Email',
+      )
+      .exec();
   }
 }

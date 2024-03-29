@@ -24,10 +24,13 @@ export class Org extends SignupSchema {
   Website: string;
 
   @Prop({ type: [OrderSchema] })
-  orders: Order[];
+
+  Orders: Order[];
+
 
   @Prop({ type: String, required: true })
   OrgRole: string;
+
 
   // @Prop({ type: Date, required: true })
   // DateOfEstablishmentOfInstitution: Date;

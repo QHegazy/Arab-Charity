@@ -51,7 +51,10 @@ export default function Home() {
     }
   });
   const data = getDataFromToken()
+  if (data) {
   const userId = data._id
+  }
+  
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     // Handle form submission here
@@ -64,9 +67,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    form.setValue('Owner', userId);
+    form.setValue('Owner',"");
 
-  }, [userId, form])
+  }, [form])
 
   return (
     <div className="w-full min-h-screen p-6 container">

@@ -5,7 +5,6 @@ export default function Footer() {
       <div className="text-orange-100  w-full h-full">
 
         <span>Made with Love ❤️ By:&ensp;</span>
-        <span> Aya Ibrahim</span>,
         <span> Ahmed Bakur</span>,
         <span> Mohamed Hegazy</span>
       </div>

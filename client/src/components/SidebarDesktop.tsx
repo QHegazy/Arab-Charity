@@ -1,5 +1,6 @@
 'use client'
-import { CircleUserRound, Home, MoreHorizontal, Settings } from "lucide-react";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
+import { LogOut, MoreHorizontal, Settings } from "lucide-react";
 import { SidbarButton } from "./SidebarButton";
 import { SidebarItems } from "@/types/sidebar";
 import Link from "next/link";
@@ -8,14 +9,33 @@ import { Popover, PopoverContent } from "./ui/popover";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "./ui/button";
 import { Avatar } from "@radix-ui/react-avatar";
-import { AvatarFallback, AvatarImage } from "./ui/avatar";
-import { usePathname } from "next/navigation";
+import { AvatarImage } from "./ui/avatar";
+import { usePathname, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { useToast } from "./ui/use-toast";
+
 interface sidebarDesktopProps {
   sidebarItems: SidebarItems;
 }
 
 export function SidebarDesktop(props: sidebarDesktopProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { toast } = useToast()
+  const userData = getDataFromToken()
+  const handleLogout = () => {
+
+    // Clear the cookies
+    Cookies.remove('accessToken');
+    toast({
+      title: "Logout Successfuly ",
+      description: "",
+    })
+    router.push("/")
+    // Replace 'yourCookieName' with the actual cookie name
+    // Redirect to logout page or perform any additional logout actions
+    // window.location.href = '/logout'; // Example: Redirect to a logout page
+  }
   return (
     <aside className="lg:w-[270px] md:w-[88px] max-w-xs h-screen fixed top-0 rihgt-0 bg-white z-40 border-l">
       <div className="h-full px-3 py-4">
@@ -23,7 +43,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
           Arab charity
         </h3>
 
-        
+
 
         <div className="mt-5">
           <div className="flex flex-col gap-3 w-full">
@@ -41,6 +61,9 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
             ) : (
               null
             )}
+            <SidbarButton variant="outline" onClick={handleLogout} icon={LogOut} className="w-full">
+              تسجيل الخروج
+            </SidbarButton>
 
             {/* { props.sidebarItems.links.map((link, index) => (
               <Link key={index} href={link.href} passHref>
@@ -65,7 +88,7 @@ export function SidebarDesktop(props: sidebarDesktopProps) {
                         <AvatarImage />
                         {/* <AvatarFallback>User</AvatarFallback> */}
                       </Avatar>
-                      <span className="hidden lg:block">User name </span>
+                      <span className="hidden lg:block">{userData ? userData.Name : "user name"}</span>
                     </div>
                     <MoreHorizontal />
                   </div>

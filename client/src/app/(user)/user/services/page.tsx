@@ -100,14 +100,19 @@ interface packagePrpos {
 export default function Home() {
   const { toast } = useToast()
   const userData = getDataFromToken()
-  console.log(userData._id)
+  // console.log(userData._id)
   const [packages, setPackages] = useState([]);
 
   useEffect(() => {
     const fetchPackages = async () => {
-      const response = await fetch('http://localhost:3000/v1/package/');
-      const data = await response.json();
-      setPackages(data.data);
+      try {
+        const response = await axios.get('http://localhost:3000/v1/package');
+        const data = await response.data;
+        setPackages(data.data);
+      } catch (error) {
+        console.log(error)
+      }
+
     };
 
     fetchPackages();

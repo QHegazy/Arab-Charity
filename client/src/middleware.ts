@@ -13,30 +13,27 @@ export function middleware(request: NextRequest) {
   const tokenData = jwt.decode(token)
   console.log(tokenData)
   // handle if user is not login and tray to access
-  // if (!token && !isPublicPath) {
-  //   return NextResponse.redirect(new URL("/login", request.nextUrl));
-  // }
-  // if (tokenData) {
-  //   if ((tokenData.Role === "Beneficiary" || tokenData.Role === "donor") && !userPath) {
-  //     return NextResponse.redirect(new URL("/user", request.nextUrl))
-  //   }
+  if (!token && !isPublicPath) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
+  }
+  if (tokenData) {
+    if ((tokenData.Role === "Beneficiary" || tokenData.Role === "donor") && !userPath) {
+      return NextResponse.redirect(new URL("/user", request.nextUrl))
+    }
 
-  //   if (tokenData.Role === "org" && !orgPath) {
-  //     return NextResponse.redirect(new URL("/org", request.nextUrl))
-  //   }
+    if (tokenData.Role === "org" && !orgPath) {
+      return NextResponse.redirect(new URL("/org", request.nextUrl))
+    }
 
-  //     if (token && isPublicPath) {
-  //   if (tokenData.Role === "Beneficiary" || tokenData.Role === "donor") {
-  //     return NextResponse.redirect(new URL('/user', request.nextUrl))
-  //   } else {
-  //     return NextResponse.redirect(new URL('/org', request.nextUrl))
-  //   }
-  // }
-  // }
+      if (token && isPublicPath) {
+    if (tokenData.Role === "Beneficiary" || tokenData.Role === "donor") {
+      return NextResponse.redirect(new URL('/user', request.nextUrl))
+    } else {
+      return NextResponse.redirect(new URL('/org', request.nextUrl))
+    }
+  }
+  }
 
-  // console.log(userPath)
-
-  // handle if user is login and try to access public route 
 
 
 }
